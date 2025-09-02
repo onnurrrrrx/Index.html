@@ -104,101 +104,42 @@
             { id: 8, category: "Hüpfburgen", name: "Wedding Bouncer", weekdayPrice: 159, weekendPrice: 189, threeDayPrice: 295, features: "mit Rutsche & Bällebad, selbst gestalten!" },
             { id: 9, category: "Hüpfburgen", name: "PAW Bouncer", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "mit Rutsche" },
             { id: 10, category: "Hüpfburgen", name: "PAW Kidszone", weekdayPrice: 139, weekendPrice: 179, threeDayPrice: 295, features: "perfekt für kleine Kids, Bälle Bad, Hüpfburg & Rutsche" },
-            { id: 11, category: "Hüpfburgen", name: "Minnie Clubhouse", weekdayPrice: 89, weekendPrice: 119, threeDayPrice: 200, features: "mit Rutsche" },
-            { id: 12, category: "Hüpfburgen", name: "Mickey Clubhouse", weekdayPrice: 79, weekendPrice: 99, threeDayPrice: 180, features: "mit Rutsche" },
-            { id: 13, category: "Hüpfburgen", name: "Super Hero", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "mit Rutsche & Hindernisse" },
-            { id: 14, category: "Hüpfburgen", name: "Mickey Bouncer", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "mit Rutsche & Hindernisse" },
-            { id: 15, category: "Hüpfburgen", name: "Mario World XXL", weekdayPrice: 145, weekendPrice: 195, threeDayPrice: 320, features: "mit riesen Rutsche & Hindernisse" },
-            { id: 16, category: "Hüpfburgen", name: "Mario Bouncer", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "mit Rutsche & Hindernisse" },
             // Spiel & Spaß
             { id: 201, category: "Spiel & Spaß", name: "Wasserrutsche mit Pool", weekdayPrice: 129, weekendPrice: 149, threeDayPrice: 280, features: "Großer Badespaß für den Garten" },
             { id: 202, category: "Spiel & Spaß", name: "Whack-A-Mole", weekdayPrice: 149, weekendPrice: 189, threeDayPrice: 295, features: "Aufblasbares Reaktionsspiel" },
             { id: 203, category: "Spiel & Spaß", name: "Sumo Fight", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "Set für 2 Personen mit Matte" },
             { id: 204, category: "Spiel & Spaß", name: "Boxautomat", weekdayPrice: 89, weekendPrice: 99, threeDayPrice: null, features: "Mit digitaler Punkteanzeige" },
             { id: 205, category: "Spiel & Spaß", name: "Maskottchen - Minnie", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
-            { id: 206, category: "Spiel & Spaß", name: "Maskottchen - Mickey", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
-            { id: 219, category: "Spiel & Spaß", name: "Maskottchen - PAW Serie", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Chase, Marshall, Skye etc." },
             { id: 221, category: "Spiel & Spaß", name: "XXL Bausteine", weekdayPrice: 19, weekendPrice: 25, threeDayPrice: null, features: "Set mit 86 großen Bausteinen" },
-            { id: 222, category: "Spiel & Spaß", name: "Tauziehen", weekdayPrice: 8, weekendPrice: 12, threeDayPrice: null, features: "Dickes Seil für Teams" },
             { id: 227, category: "Spiel & Spaß", name: "XXL 4-Gewinnt", weekdayPrice: 14, weekendPrice: 19, threeDayPrice: null, features: "Großes Strategiespiel" },
             // Funfood
-            { 
-                id: 301, category: "Funfood", name: "Slush-Ice Maschine (2-Kammer)", weekdayPrice: 55, weekendPrice: 75, threeDayPrice: null, 
-                features: "Miete für 24 Std. Sirup & Zubehör separat.",
-                addons: [
-                    { name: "Gewünschte Sirup-Sorten", type: "text", placeholder: "z.B. 2x Blaue Himbeere, 1x Waldmeister...", price: 0 },
-                    { name: "Sirup 1 Liter", type: "quantity", price: 9.90 },
-                    { name: "Sirup 5 Liter", type: "quantity", price: 45.00 },
-                    { name: "Palmenbecher 0,4l (Stück)", type: "quantity", price: 2.50 },
-                    { name: "Set: 30x Becher 0,2l + Trinkhalme", type: "quantity", price: 4.00 }
-                ]
-            },
-            { 
-                id: 302, category: "Funfood", name: "Slush-Ice Maschine (3-Kammer)", weekdayPrice: 80, weekendPrice: 95, threeDayPrice: null, 
-                features: "Miete für 24 Std. Sirup & Zubehör separat.",
-                addons: [
-                    { name: "Gewünschte Sirup-Sorten", type: "text", placeholder: "z.B. 2x Cola, 1x Kirsche...", price: 0 },
-                    { name: "Sirup 1 Liter", type: "quantity", price: 9.90 },
-                    { name: "Sirup 5 Liter", type: "quantity", price: 45.00 },
-                    { name: "Palmenbecher 0,4l (Stück)", type: "quantity", price: 2.50 },
-                    { name: "Set: 30x Becher 0,2l + Trinkhalme", type: "quantity", price: 4.00 }
-                ]
-            },
-            { 
-                id: 303, category: "Funfood", name: "Popcorn Maschine", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null,
-                features: "Miete für 24 Std. Inkl. 500g Mais & 50g Zucker/Salz.",
-                addons: [
-                    { name: "Maisart", type: "radio", options: ["Butterfly Mais", "Mushroom Mais"], price: 0},
-                    { name: "Popcorn Spitztüten (10 Stück)", type: "quantity", price: 3.00 },
-                    { name: "Popcorn Tüten (10 Stück)", type: "quantity", price: 2.50 },
-                    { name: "Popcorn Becher (10 Stück)", type: "quantity", price: 3.50 }
-                ]
-            },
-            { 
-                id: 304, category: "Funfood", name: "XXL Popcorn Maschine", weekdayPrice: 59, weekendPrice: 79, threeDayPrice: null,
-                features: "Miete für 24 Std. Inkl. 1kg Mais & 100g Zucker/Salz.",
-                addons: [
-                    { name: "Maisart", type: "radio", options: ["Butterfly Mais", "Mushroom Mais"], price: 0},
-                    { name: "Popcorn Spitztüten (10 Stück)", type: "quantity", price: 3.00 },
-                    { name: "Popcorn Tüten (10 Stück)", type: "quantity", price: 2.50 },
-                    { name: "Popcorn Becher (10 Stück)", type: "quantity", price: 3.50 }
-                ]
-            },
-            {
-                id: 305, category: "Funfood", name: "Softeis Maschine", weekdayPrice: 89, weekendPrice: 109, threeDayPrice: null,
-                features: "Miete für 24 Std. Pulver & Zubehör separat.",
-                addons: [
-                    { name: "Softeispulver Schoko (500g)", type: "quantity", price: 8.90 },
-                    { name: "Softeispulver Vanille (500g)", type: "quantity", price: 8.90 },
-                    { name: "Softeispulver Erdbeere (500g)", type: "quantity", price: 8.90 },
-                    { name: "Set: 30x Eisbecher + Löffel", type: "quantity", price: 4.00 }
-                ]
-            },
-            {
-                id: 306, category: "Funfood", name: "Zuckerwatten Maschine", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null,
-                features: "Miete für 24 Std. Zucker & Stäbchen separat.",
-                addons: [
-                    { name: "Gewünschte Zucker-Sorten", type: "text", placeholder: "z.B. Orange, Blaue Himbeere...", price: 0 },
-                    { name: "Zucker-Set (200g inkl. Stäbchen)", type: "quantity", price: 3.90 }
-                ]
-            },
-            {
-                id: 307, category: "Funfood", name: "Hotdog Steamer", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null,
-                features: "Miete für 24 Std. Zubehör separat.",
-                addons: [
-                    { name: "Hotdog Tüten (20 Stück)", type: "quantity", price: 2.00 }
-                ]
-            },
-            {
-                id: 308, category: "Funfood", name: "Gastro Doppel-Fritteuse", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null,
-                features: "Miete für 24 Std. Zubehör separat.",
-                addons: [
-                    { name: "Bestellte TK-Produkte", type: "text", placeholder: "z.B. 2kg Pommes, 20x Frikandeln...", price: 0 }
-                ]
-            },
+            { id: 301, category: "Funfood", name: "Slush-Ice Maschine (2-Kammer)", weekdayPrice: 55, weekendPrice: 75, threeDayPrice: null, features: "Miete für 24 Std. Sirup & Zubehör separat.", addons: [ { name: "Gewünschte Sirup-Sorten", type: "text", placeholder: "z.B. 2x Blaue Himbeere, 1x Waldmeister...", price: 0 }, { name: "Sirup 1 Liter", type: "quantity", price: 9.90 }, { name: "Sirup 5 Liter", type: "quantity", price: 45.00 }, { name: "Palmenbecher 0,4l (Stück)", type: "quantity", price: 2.50 }, { name: "Set: 30x Becher 0,2l + Trinkhalme", type: "quantity", price: 4.00 } ] },
+            { id: 302, category: "Funfood", name: "Slush-Ice Maschine (3-Kammer)", weekdayPrice: 80, weekendPrice: 95, threeDayPrice: null, features: "Miete für 24 Std. Sirup & Zubehör separat.", addons: [ { name: "Gewünschte Sirup-Sorten", type: "text", placeholder: "z.B. 2x Cola, 1x Kirsche...", price: 0 }, { name: "Sirup 1 Liter", type: "quantity", price: 9.90 }, { name: "Sirup 5 Liter", type: "quantity", price: 45.00 }, { name: "Palmenbecher 0,4l (Stück)", type: "quantity", price: 2.50 }, { name: "Set: 30x Becher 0,2l + Trinkhalme", type: "quantity", price: 4.00 } ] },
+            { id: 303, category: "Funfood", name: "Popcorn Maschine", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std. Inkl. 500g Mais & 50g Zucker/Salz.", addons: [ { name: "Maisart", type: "radio", options: ["Butterfly Mais", "Mushroom Mais"], price: 0}, { name: "Popcorn Spitztüten (10 Stück)", type: "quantity", price: 3.00 }, { name: "Popcorn Tüten (10 Stück)", type: "quantity", price: 2.50 }, { name: "Popcorn Becher (10 Stück)", type: "quantity", price: 3.50 } ] },
+            { id: 304, category: "Funfood", name: "XXL Popcorn Maschine", weekdayPrice: 59, weekendPrice: 79, threeDayPrice: null, features: "Miete für 24 Std. Inkl. 1kg Mais & 100g Zucker/Salz.", addons: [ { name: "Maisart", type: "radio", options: ["Butterfly Mais", "Mushroom Mais"], price: 0}, { name: "Popcorn Spitztüten (10 Stück)", type: "quantity", price: 3.00 }, { name: "Popcorn Tüten (10 Stück)", type: "quantity", price: 2.50 }, { name: "Popcorn Becher (10 Stück)", type: "quantity", price: 3.50 } ] },
+            { id: 305, category: "Funfood", name: "Softeis Maschine", weekdayPrice: 89, weekendPrice: 109, threeDayPrice: null, features: "Miete für 24 Std. Pulver & Zubehör separat.", addons: [ { name: "Softeispulver Schoko (500g)", type: "quantity", price: 8.90 }, { name: "Softeispulver Vanille (500g)", type: "quantity", price: 8.90 }, { name: "Softeispulver Erdbeere (500g)", type: "quantity", price: 8.90 }, { name: "Set: 30x Eisbecher + Löffel", type: "quantity", price: 4.00 } ] },
+            { id: 306, category: "Funfood", name: "Zuckerwatten Maschine", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std. Zucker & Stäbchen separat.", addons: [ { name: "Gewünschte Zucker-Sorten", type: "text", placeholder: "z.B. Orange, Blaue Himbeere...", price: 0 }, { name: "Zucker-Set (200g inkl. Stäbchen)", type: "quantity", price: 3.90 } ] },
+            { id: 307, category: "Funfood", name: "Hotdog Steamer", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std. Zubehör separat.", addons: [ { name: "Hotdog Tüten (20 Stück)", type: "quantity", price: 2.00 } ] },
+            { id: 308, category: "Funfood", name: "Gastro Doppel-Fritteuse", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std. Zubehör separat.", addons: [ { name: "Bestellte TK-Produkte", type: "text", placeholder: "z.B. 2kg Pommes, 20x Frikandeln...", price: 0 } ] },
             { id: 309, category: "Funfood", name: "Schokobrunnen", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std." },
             { id: 310, category: "Funfood", name: "Waffel am Stiel", weekdayPrice: 25, weekendPrice: 30, threeDayPrice: null, features: "Miete für 24 Std." },
-            { id: 311, category: "Funfood", name: "Waffeleisen", weekdayPrice: 15, weekendPrice: 20, threeDayPrice: null, features: "Miete für 24 Std." }
+            { id: 311, category: "Funfood", name: "Waffeleisen", weekdayPrice: 15, weekendPrice: 20, threeDayPrice: null, features: "Miete für 24 Std." },
+            // Equipment
+            { id: 401, category: "Equipment", name: "Disco", weekdayPrice: 285, weekendPrice: 345, threeDayPrice: 450, features: "Komplettset für eine Party." },
+            { id: 402, category: "Equipment", name: "Kinoabend", weekdayPrice: 95, weekendPrice: 145, threeDayPrice: 245, features: "Set für den perfekten Filmabend.", addons: [ { name: "Lautsprecher", type: "checkbox", price: 0 }, { name: "Sitzsäcke", type: "checkbox", price: 0 }, { name: "Beamer", type: "checkbox", price: 0 }, { name: "Popcornmaschine", type: "checkbox", price: 0 } ] },
+            { id: 403, category: "Equipment", name: "Stehtische (Set)", weekdayPrice: 20, weekendPrice: 20, threeDayPrice: null, features: "Preis pro Set (1x Tisch & 1x Husse).", addons: [ { name: "Anzahl der Sets", type: "quantity", price: 0, placeholder: "Stückzahl eintragen" } ] },
+            { id: 404, category: "Equipment", name: "Kinder Sitzgruppen (Set)", weekdayPrice: 25, weekendPrice: 25, threeDayPrice: null, features: "Preis pro Set (1x Tisch & 4x Stühle).", addons: [ { name: "Anzahl der Sets", type: "quantity", price: 0, placeholder: "Stückzahl eintragen" } ] },
+            { id: 405, category: "Equipment", name: "Party Deko", weekdayPrice: 19.90, weekendPrice: 19.90, threeDayPrice: null, features: "Preis für ein Basis-Set.", addons: [ { name: "Details zum Set", type: "text", placeholder: "Motto, Farben, etc.", price: 0 } ] },
+            { id: 406, category: "Equipment", name: "Partyzelt 3m x 3m", weekdayPrice: 40, weekendPrice: 50, threeDayPrice: null, features: "Stabiles Zelt für jeden Anlass." },
+            { id: 407, category: "Equipment", name: "Partyzelt 3m x 6m", weekdayPrice: 80, weekendPrice: 95, threeDayPrice: null, features: "Großes Zelt für mehr Gäste." },
+            { id: 408, category: "Equipment", name: "Festzeltgarnitur", weekdayPrice: 12, weekendPrice: 20, threeDayPrice: null, features: "Für Erwachsene und Kinder erhältlich.", addons: [ { name: "Anzahl der Garnituren", type: "quantity", price: 0, placeholder: "Stückzahl eintragen" } ] },
+            { id: 409, category: "Equipment", name: "Festzeltgarnitur mit Hussen", weekdayPrice: 20, weekendPrice: 35, threeDayPrice: null, features: "Elegante weiße Hussen inklusive.", addons: [ { name: "Anzahl der Garnituren", type: "quantity", price: 0, placeholder: "Stückzahl eintragen" } ] },
+            { id: 410, category: "Equipment", name: "JBL PartyBox 320", weekdayPrice: 35, weekendPrice: 35, threeDayPrice: null, features: "Kraftvoller Sound für deine Party.", addons: [ { name: "Inklusive Stativ", type: "checkbox", price: 0 }, { name: "Zusätzliches Mikrofon", type: "checkbox", price: 0 } ] },
+            { id: 411, category: "Equipment", name: "JBL PartyBox 710", weekdayPrice: 50, weekendPrice: 50, threeDayPrice: null, features: "Massiver Sound für große Events.", addons: [ { name: "Inklusive Stativ", type: "checkbox", price: 0 }, { name: "Zusätzliches Mikrofon", type: "checkbox", price: 0 } ] },
+            { id: 412, category: "Equipment", name: "Party Set", weekdayPrice: 25, weekendPrice: 35, threeDayPrice: 95, features: "Grundausstattung für jede Feier." },
+            { id: 413, category: "Equipment", name: "XXL Gasgrill", weekdayPrice: 65, weekendPrice: 85, threeDayPrice: 145, features: "Für professionelles Grillvergnügen." },
+            { id: 414, category: "Equipment", name: "Kaffeevollautomat", weekdayPrice: 45, weekendPrice: 45, threeDayPrice: null, features: "Mietpreis ab 45€, je nach Modell.", addons: [ { name: "Modell / Details", type: "text", placeholder: "Gewünschtes Modell", price: 0 } ] },
+            { id: 415, category: "Equipment", name: "Getränkekühlschrank", weekdayPrice: 45, weekendPrice: 45, threeDayPrice: null, features: "Mietpreis ab 45€, je nach Modell.", addons: [ { name: "Modell / Details", type: "text", placeholder: "Größe, etc.", price: 0 } ] }
         ];
 
         let orders = [];
@@ -248,10 +189,8 @@
         function updateAddonInCart(productId, addonName, value, price, type) {
             const cartItem = cart.find(item => item.productId === productId);
             if (!cartItem) return;
-
             let existingAddon = cartItem.addons.find(a => a.name === addonName);
-
-            if (type === 'quantity' && (value === '' || value <= 0)) {
+            if ((type === 'quantity' && (value === '' || value <= 0)) || (type === 'checkbox' && value === false)) {
                 cartItem.addons = cartItem.addons.filter(a => a.name !== addonName);
             } else {
                 if (existingAddon) {
@@ -298,16 +237,19 @@
                         const currentValue = savedAddon ? savedAddon.value : '';
 
                         if (addon.type === 'quantity') {
-                            addonsHTML += `<div class="flex justify-between items-center text-sm"><label>${addon.name} (+${addon.price.toFixed(2)}€)</label><input type="number" min="0" value="${currentValue}" oninput="updateAddonInCart(${p.id}, '${addon.name}', this.value, ${addon.price}, 'quantity')" class="w-20 px-2 py-1 border rounded-md"></div>`;
+                            addonsHTML += `<div class="flex justify-between items-center text-sm"><label>${addon.name} ${addon.price > 0 ? `(+${addon.price.toFixed(2)}€)` : ''}</label><input type="number" min="0" value="${currentValue}" placeholder="${addon.placeholder || ''}" oninput="updateAddonInCart(${p.id}, '${addon.name}', this.value, ${addon.price}, 'quantity')" class="w-20 px-2 py-1 border rounded-md"></div>`;
                         } else if (addon.type === 'text') {
-                            addonsHTML += `<div class="flex justify-between items-center text-sm"><label>${addon.name}</label><input type="text" value="${currentValue}" placeholder="${addon.placeholder || ''}" oninput="updateAddonInCart(${p.id}, '${addon.name}', this.value, 0, 'text')" class="w-2/3 px-2 py-1 border rounded-md"></div>`;
+                            addonsHTML += `<div class="flex justify-between items-center text-sm"><label>${addon.name}</label><input type="text" value="${currentValue || ''}" placeholder="${addon.placeholder || ''}" oninput="updateAddonInCart(${p.id}, '${addon.name}', this.value, 0, 'text')" class="w-2/3 px-2 py-1 border rounded-md"></div>`;
                         } else if (addon.type === 'radio') {
                              addonsHTML += `<div class="text-sm"><label class="font-medium">${addon.name}</label><div class="flex gap-4 mt-1">`
                              addon.options.forEach(opt => {
                                 const isChecked = currentValue === opt ? 'checked' : '';
-                                addonsHTML += `<label class="flex items-center"><input type="radio" name="radio-${p.id}-${addon.name}" value="${opt}" ${isChecked} onchange="updateAddonInCart(${p.id}, '${addon.name}', this.value, 0, 'radio')">&nbsp;${opt}</label>`
+                                addonsHTML += `<label class="flex items-center"><input type="radio" name="radio-${p.id}-${addon.name}" value="${opt}" ${isChecked} onchange="updateAddonInCart(${p.id}, '${addon.name}', this.value, 0, 'radio')"> ${opt}</label>`
                              });
                              addonsHTML += `</div></div>`
+                        } else if (addon.type === 'checkbox') {
+                            const isChecked = currentValue === true ? 'checked' : '';
+                            addonsHTML += `<div class="text-sm"><label class="flex items-center"><input type="checkbox" ${isChecked} onchange="updateAddonInCart(${p.id}, '${addon.name}', this.checked, ${addon.price}, 'checkbox')"> ${addon.name} ${addon.price > 0 ? `(+${addon.price.toFixed(2)}€)` : ''}</label></div>`;
                         }
                     });
                     addonsHTML += '</div>';
@@ -338,13 +280,21 @@
             const hasDateRange = start && end && new Date(end) >= new Date(start);
 
             cart.forEach(item => {
-                // Base product price
+                const p = products.find(pr => pr.id === item.productId);
+                let quantity = 1;
+                if(item.addons) {
+                    const quantityAddon = item.addons.find(a => a.name.startsWith('Anzahl der'));
+                    if(quantityAddon && quantityAddon.value > 0) {
+                        quantity = parseInt(quantityAddon.value);
+                    }
+                }
+
                 if (item.overridePrice !== null && !isNaN(item.overridePrice)) {
                     pCost += parseFloat(item.overridePrice);
                 } else {
-                    const p = products.find(pr => pr.id === item.productId);
+                    let singleItemPrice = 0;
                     if (p.threeDayPrice && item.priceModel === 'threeDay') {
-                        pCost += p.threeDayPrice;
+                        singleItemPrice = p.threeDayPrice;
                     } else if (hasDateRange) {
                         const days = Math.ceil((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24)) + 1;
                         for (let i = 0; i < days; i++) {
@@ -352,17 +302,22 @@
                             d.setDate(d.getDate() + i);
                             const day = d.getDay();
                             const isWk = (day === 0 || day === 5 || day === 6);
-                            pCost += isWk ? p.weekendPrice : p.weekdayPrice;
+                            singleItemPrice += isWk ? p.weekendPrice : p.weekdayPrice;
                         }
                     } else {
-                        pCost += (item.priceModel === 'weekend') ? p.weekendPrice : p.weekdayPrice;
+                        singleItemPrice = (item.priceModel === 'weekend') ? p.weekendPrice : p.weekdayPrice;
                     }
+                    pCost += singleItemPrice * quantity;
                 }
-                // Addon costs
+                
                 if (item.addons) {
                     item.addons.forEach(addon => {
-                        if (addon.type === 'quantity' && addon.value > 0) {
-                            addonCost += addon.price * addon.value;
+                        if (addon.price > 0) {
+                            if (addon.type === 'quantity' && addon.value > 0) {
+                                addonCost += addon.price * addon.value;
+                            } else if (addon.type === 'checkbox' && addon.value === true) {
+                                addonCost += addon.price;
+                            }
                         }
                     });
                 }
@@ -428,7 +383,7 @@
             closeBookingModal();
             renderOrders();
         }
-        function renderOrders(){const list=document.getElementById('ordersList');list.innerHTML='';if(orders.length===0){list.innerHTML='<p class="p-4 text-center text-gray-500">Keine Aufträge vorhanden.</p>';return;}orders.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).forEach(order=>{list.innerHTML+=`<div class="p-4"><div class="flex justify-between"><div><p class="font-semibold">${order.customerName} - ${new Date(order.startDate).toLocaleString('de-DE')}</p><p class="text-sm text-gray-600">${order.products.map(p=>p.name).join(', ')}</p></div><p class="text-right font-bold text-green-600">${order.totalCost.toFixed(2)} €</p></div></div>`;});}
+        function renderOrders(){const list=document.getElementById('ordersList');list.innerHTML='';if(orders.length===0){list.innerHTML='<p class="p-4 text-center text-gray-500">Keine Aufträge vorhanden.</p>';return;}orders.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).forEach(order=>{list.innerHTML+=`<div class="p-4"><div class="flex justify-between"><div><p class="font-semibold">${order.customerName} - ${new Date(order.startDate).toLocaleDateString('de-DE')}</p><p class="text-sm text-gray-600">${order.products.map(p=>p.name).join(', ')}</p></div><p class="text-right font-bold text-green-600">${order.totalCost.toFixed(2)} €</p></div></div>`;});}
         function renderEmployeeBookings() {
             const cont = document.getElementById('employeeBookingsList');
             cont.innerHTML = '';
@@ -442,13 +397,24 @@
             active.forEach(o => {
                 let productsHTML = '';
                 o.products.forEach(p => {
-                    productsHTML += `<li>${p.name} (${p.finalPrice.toFixed(2)} €)`;
+                    productsHTML += `<li>${p.name}`;
                     if (p.addons && p.addons.length > 0) {
+                        const quantityAddon = p.addons.find(a => a.name.startsWith("Anzahl der"));
+                        if (quantityAddon && quantityAddon.value > 0) {
+                            productsHTML += ` <strong>(${quantityAddon.value}x)</strong>`;
+                        }
+                    }
+                     productsHTML += ` (${p.finalPrice.toFixed(2)} €)`;
+                    
+                    const addonsToShow = p.addons.filter(a => a.value && !a.name.startsWith("Anzahl der"));
+                    if (addonsToShow.length > 0) {
                         productsHTML += `<ul class="list-disc list-inside ml-4 text-xs text-gray-600">`;
-                        p.addons.forEach(addon => {
-                           if (addon.value) {
-                                productsHTML += `<li>${addon.name}: ${addon.type === 'quantity' ? `<strong>${addon.value}x</strong>` : `<em>${addon.value}</em>`}</li>`;
-                           }
+                        addonsToShow.forEach(addon => {
+                            let displayValue = '';
+                            if (addon.type === 'quantity') displayValue = `<strong>${addon.value}x</strong>`;
+                            else if (addon.type === 'checkbox' && addon.value) displayValue = `✔️ Ja`;
+                            else displayValue = `<em>${addon.value}</em>`;
+                            productsHTML += `<li>${addon.name}: ${displayValue}</li>`;
                         });
                         productsHTML += `</ul>`;
                     }

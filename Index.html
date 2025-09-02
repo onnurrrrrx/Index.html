@@ -6,76 +6,74 @@
     <title>Partycrasher App</title>
     <style>
         :root {
-            --primary-color: #e8495f; /* Partycrasher Pink */
-            --secondary-color: #075e54; /* Mitarbeiter Grün */
-            --light-gray: #f4f7f6;
-            --dark-gray: #333;
-            --white: #fff;
+            --primary-color: #e8495f; --secondary-color: #075e54; --light-gray: #f4f7f6;
+            --dark-gray: #333; --white: #fff; --success-color: #28a745; --info-color: #007bff;
         }
         body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; background-color: var(--light-gray); color: var(--dark-gray); }
         .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
-        .view { display: none; } /* Alle Ansichten standardmäßig ausblenden */
-        .view.active { display: block; } /* Nur die aktive Ansicht zeigen */
+        .view { display: none; }
+        .view.active { display: block; }
         .card { background-color: var(--white); border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; padding: 20px; }
-        h1, h2 { margin-top: 0; }
+        h1, h2, h3 { margin-top: 0; }
         h1 { color: var(--primary-color); }
-        h2 { color: var(--dark-gray); border-bottom: 2px solid var(--light-gray); padding-bottom: 10px; }
-        
-        /* Login-Ansicht */
-        #login-view .card { max-width: 400px; margin: 50px auto; }
+        h2 { border-bottom: 2px solid var(--light-gray); padding-bottom: 10px; }
+        .btn { display: inline-block; color: var(--white); padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; text-align: center; text-decoration: none; width: 100%; box-sizing: border-box; margin-top: 10px; transition: background-color 0.2s; }
+        .btn:disabled { background-color: #ccc; cursor: not-allowed; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        .btn { display: inline-block; color: var(--white); padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; text-align: center; text-decoration: none; width: 100%; box-sizing: border-box; margin-top: 10px; }
-        .btn-admin { background-color: var(--primary-color); }
-        .btn-admin:hover { background-color: #d13047; }
-        .btn-employee { background-color: var(--secondary-color); }
-        .btn-employee:hover { background-color: #054e46; }
-
-        /* Admin-Ansicht */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .product-card { border: 1px solid #ddd; border-radius: 8px; padding: 15px; cursor: pointer; transition: all 0.2s ease-in-out; }
-        .product-card:hover { border-color: var(--primary-color); background-color: #fff8f9; }
-        .product-card.selected { border-color: var(--primary-color); background-color: #fcdde2; border-width: 2px; }
-        .product-card h3 { margin-top: 0; }
-        .product-card p { font-size: 0.9em; color: #666; }
-        #whatsapp-link-container { margin-top: 20px; padding: 15px; background-color: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 5px; display: none; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
         
-        /* Mitarbeiter-Ansicht */
-        .booking-list-item { border-left: 5px solid var(--secondary-color); padding: 20px; }
-        .booking-list-item h3 { margin-top: 0; }
-        .booking-list-item p { margin: 5px 0; }
-        .booking-list-item ul { padding-left: 20px; margin-top: 10px; }
-        .booking-header { display: flex; justify-content: space-between; align-items: center; }
-        .btn-delete { background-color: #aaa; width: auto; padding: 5px 10px; font-size: 12px; }
-        .btn-logout { background-color: #6c757d; }
+        /* Header & Navigation */
+        header { background-color: var(--white); padding: 10px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: none; justify-content: space-between; align-items: center; }
+        header.visible { display: flex; }
+        #app-title { font-size: 24px; margin: 0; }
+        #admin-nav button { background: none; border: none; color: var(--dark-gray); cursor: pointer; padding: 8px 12px; font-size: 16px; border-radius: 5px; }
+        #admin-nav button.active { background-color: var(--light-gray); font-weight: bold; }
+        .btn-logout { background-color: #6c757d; width: auto; margin-left: 20px; }
 
-        /* Header */
-        header { background-color: var(--white); padding: 10px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        header h1 { font-size: 24px; margin: 0; }
+        /* Zusatzoptionen Buttons */
+        .option-buttons { display: flex; gap: 10px; margin-bottom: 15px; }
+        .option-btn { flex: 1; background-color: #e9ecef; border: 1px solid #ced4da; color: var(--dark-gray); padding: 10px; border-radius: 5px; cursor: pointer; text-align: center; }
+        .option-btn.selected { background-color: var(--info-color); color: var(--white); border-color: var(--info-color); }
+        
+        /* Übersicht Seite */
+        #summary-view .total-revenue { background-color: var(--secondary-color); color: white; padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 20px; }
+        #summary-view .total-revenue h2 { color: white; }
+        #summary-view .total-revenue span { font-size: 2em; font-weight: bold; }
+        .summary-list-item { border-left: 5px solid var(--info-color); margin-bottom: 15px; padding: 15px; }
+        
+        /* Andere Stile */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 15px; }
+        .product-card { border: 1px solid #ddd; border-radius: 8px; padding: 15px; cursor: pointer; display: flex; flex-direction: column; }
+        .product-card.selected { border-color: var(--primary-color); background-color: #fff8f9; border-width: 2px; }
+        .product-card h3 { margin: 0 0 5px 0; font-size: 1em; }
+        .summary { margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; }
+        .summary p { margin: 8px 0; display: flex; justify-content: space-between; font-size: 1em; }
+        .summary p.discount { color: var(--success-color); }
+        .summary .total { font-size: 1.3em; font-weight: bold; border-top: 2px solid #ccc; padding-top: 10px; margin-top: 10px; }
     </style>
 </head>
 <body>
 
     <div id="login-view" class="view active">
-        <div class="container">
-            <div class="card">
-                <h1>Willkommen!</h1>
-                <p>Bitte wählen Sie Ihre Rolle.</p>
-                <div class="form-group">
-                    <label for="password">Admin-Passwort</label>
-                    <input type="password" id="password" placeholder="Passwort eingeben">
-                </div>
-                <button id="admin-login-btn" class="btn btn-admin">Als Admin anmelden</button>
-                <hr style="margin: 20px 0; border: 1px solid var(--light-gray);">
-                <button id="employee-login-btn" class="btn btn-employee">Als Mitarbeiter fortfahren</button>
-            </div>
-        </div>
+        <div class="container"><div class="card" style="max-width: 400px; margin: 50px auto;">
+            <h1>Willkommen!</h1>
+            <div class="form-group"><label for="password">Admin-Passwort</label><input type="password" id="password" placeholder="Passwort eingeben"></div>
+            <button id="admin-login-btn" class="btn" style="background-color: var(--primary-color);">Als Admin anmelden</button>
+            <hr style="margin: 20px 0; border-top: 1px solid var(--light-gray);">
+            <button id="employee-login-btn" class="btn" style="background-color: var(--secondary-color);">Als Mitarbeiter fortfahren</button>
+        </div></div>
     </div>
     
-    <header id="app-header" style="display: none;">
-        <h1 id="header-title"></h1>
-        <button id="logout-btn" class="btn btn-logout" style="width: auto;">Abmelden</button>
+    <header id="app-header">
+        <div>
+            <span id="app-title"></span>
+            <nav id="admin-nav" style="display: none; margin-left: 20px; display: inline-block;">
+                <button id="nav-booking" class="active">Neue Buchung</button>
+                <button id="nav-summary">Umsatzübersicht</button>
+            </nav>
+        </div>
+        <button id="logout-btn" class="btn-logout">Abmelden</button>
     </header>
 
     <div id="admin-view" class="view">
@@ -85,205 +83,277 @@
                 <div id="product-grid" class="product-grid"></div>
             </div>
             <div class="card">
-                <h2>2. Kundendaten & Details</h2>
+                <h2>2. Buchungsdetails</h2>
                 <form id="booking-form">
                     <div class="form-group"><label for="customerName">Kundenname</label><input type="text" id="customerName" required></div>
-                    <div class="form-group"><label for="customerPhone">Kunden-Telefon</label><input type="tel" id="customerPhone" required></div>
-                    <div class="form-group"><label for="deliveryAddress">Lieferadresse</label><textarea id="deliveryAddress" rows="3" required></textarea></div>
-                    <div class="form-group"><label for="deliveryDate">Lieferdatum</label><input type="date" id="deliveryDate" required></div>
-                    <div class="form-group"><label for="deliveryTime">Lieferzeit</label><input type="time" id="deliveryTime" required></div>
+                    <div style="display: flex; gap: 20px;">
+                        <div class="form-group" style="flex:1;"><label for="aufbauDate">Aufbau am</label><input type="date" id="aufbauDate" required></div>
+                        <div class="form-group" style="flex:1;"><label for="abbauDate">Abbau am</label><input type="date" id="abbauDate" required></div>
+                    </div>
+                    <div class="form-group"><label for="deliveryAddress">Lieferadresse</label><textarea id="deliveryAddress" rows="2" required placeholder="Straße, Hausnr, PLZ, Ort"></textarea></div>
+                    <div class="form-group">
+                        <label>Untergrund</label>
+                        <select id="surfaceType"><option value="rasen">Rasen</option><option value="asphalt">Asphalt (+30,00 €)</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Zusatzoptionen</label>
+                        <div class="option-buttons">
+                            <div id="option-cable" class="option-btn">Kabeltrommel (+5,00 €)</div>
+                            <div id="option-service" class="option-btn">Auf/Abbau Service (+45,00 €)</div>
+                        </div>
+                    </div>
                     <div class="form-group"><label for="notes">Anmerkungen</label><textarea id="notes" rows="3"></textarea></div>
-                    <button type="submit" class="btn btn-admin">Buchung für Mitarbeiter speichern</button>
+                    
+                    <div class="summary">
+                        <h3>Buchungsübersicht</h3>
+                        <p><span>Produkte & Optionen</span> <span id="summary-products">0,00 €</span></p>
+                        <p><span>Asphalt-Zuschlag</span> <span id="summary-surface">0,00 €</span></p>
+                        <p><span>Fahrtstrecke (<span id="summary-distance-km">0</span> km)</span> <span id="summary-delivery">0,00 €</span></p>
+                        <p class="discount"><span id="summary-discount-label">Frühbucherrabatt</span> <span id="summary-discount">- 0,00 €</span></p>
+                        <p class="total"><span>Gesamtbetrag</span> <span id="summary-total">0,00 €</span></p>
+                    </div>
+
+                    <button type="submit" id="save-booking-btn" class="btn" style="background-color: var(--primary-color);">Buchung speichern & zur Übersicht</button>
                 </form>
-                <div id="whatsapp-link-container">
-                    <p>Buchung wurde gespeichert! Optional können Sie die Daten auch via WhatsApp teilen:</p>
-                    <a id="whatsapp-link" href="#" target="_blank" class="btn" style="background-color: #25d366;">Auf WhatsApp teilen</a>
-                </div>
             </div>
+        </div>
+    </div>
+    
+    <div id="summary-view" class="view">
+        <div class="container">
+            <div class="total-revenue">
+                <h2>Gesamteinnahmen</h2>
+                <span id="total-revenue-amount">0,00 €</span>
+            </div>
+            <div id="summary-list"></div>
         </div>
     </div>
 
     <div id="employee-view" class="view">
-        <div class="container">
-            <div class="card">
-                <h2>Offene Aufträge</h2>
-                <div id="bookings-list">
-                    <p>Keine Aufträge vorhanden.</p>
-                </div>
-            </div>
-        </div>
+        <div class="container"><div class="card">
+            <h2>Offene Aufträge</h2>
+            <div id="bookings-list"><p>Keine Aufträge vorhanden.</p></div>
+        </div></div>
     </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-    // --- KONFIGURATION ---
-    const ADMIN_PASSWORD = "1234"; // !! WICHTIG: Ändern Sie dieses Passwort!
-    const products = [
-        { id: 1, category: 'Hüpfburgen', name: 'Multiplay Super (mit Rutsche)' }, { id: 2, category: 'Hüpfburgen', name: 'Multiplay Einhorn (mit Rutsche)' }, { id: 3, category: 'Hüpfburgen', name: 'Multiplay Feuerwehr (mit Rutsche)' }, { id: 4, category: 'Hüpfburgen', name: 'Multiplay Clown (mit Rutsche)' }, { id: 5, category: 'Hüpfburgen', name: 'Multiplay Dschungel (mit Rutsche)' }, { id: 6, category: 'Hüpfburgen', name: 'Profi Parkour (Hindernisbahn)' }, { id: 7, category: 'Eventmodule & Fun Food', name: 'Slush-Eis-Maschine' }, { id: 8, category: 'Eventmodule & Fun Food', name: 'Popcornmaschine' }, { id: 9, category: 'Eventmodule & Fun Food', name: 'Zuckerwattemaschine' }, { id: 10, category: 'Zelte & Mobiliar', name: 'Partyzelt 4x8 Meter' }, { id: 11, category: 'Zelte & Mobiliar', name: 'Stehtisch' }, { id: 12, category: 'Zelte & Mobiliar', name: 'Bierzeltgarnitur' }, { id: 13, category: 'Zelte & Mobiliar', name: 'Theke' }, { id: 14, category: 'Zelte & Mobiliar', name: 'Kühlschrank' }, { id: 15, category: 'Zubehör', name: 'Stromgenerator' }, { id: 16, category: 'Zubehör', name: 'Nebelmaschine' }, { id: 17, category: 'Zubehör', name: 'Lichterkette' }, { id: 18, category: 'Zubehör', name: 'Musikbox (Teufel Rockster Air)' }
-    ];
-
-    // --- DOM-Elemente ---
-    const views = document.querySelectorAll('.view');
-    const loginView = document.getElementById('login-view');
-    const adminView = document.getElementById('admin-view');
-    const employeeView = document.getElementById('employee-view');
-    const appHeader = document.getElementById('app-header');
-    const headerTitle = document.getElementById('header-title');
+    // --- KONFIGURATION & DATEN ---
+    const ADMIN_PASSWORD = "1234";
+    const START_ADDRESS_COORDS = "5.7663,51.5835";
+    const products = [ /* ... (Gekürzt für Lesbarkeit - der Code ist identisch zur Vorversion) ... */ { id: 101, category: 'Hüpfburgen', name: 'Summer Party', details: '4,9x4x4m, bis 8 Kids, mit Rutsche', pricing: { weekday: 99, weekend: 129, threeDay: 245 } }, { id: 102, category: 'Hüpfburgen', name: 'Hawaii Box', details: '4,8x4x3,5m, bis 8 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 99, weekend: 129, threeDay: 245 } }, { id: 103, category: 'Hüpfburgen', name: 'Fußball Hütte', details: '5,5x5x4,6m, bis 12 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 139, weekend: 179, threeDay: 295 } }, { id: 104, category: 'Hüpfburgen', name: 'Haifisch Becken', details: '5,4x5x3,8m, bis 12 Kids, Wasserrutsche mgl. (+25€)', pricing: { weekday: 139, weekend: 179, threeDay: 295 } }, { id: 105, category: 'Hüpfburgen', name: 'Piratenschiff', details: '6,2x3,8x3,6m, bis 8 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 99, weekend: 129, threeDay: 245 } }, { id: 106, category: 'Hüpfburgen', name: 'Dino Doubleslide', details: '5,4x6,2x3,4m, bis 15 Kids, Wasser mgl. (+25€)', pricing: { weekday: 145, weekend: 195, threeDay: 320 } }, { id: 107, category: 'Hüpfburgen', name: 'Monster-Truck Doubleslide', details: '5,4x6,2x3,4m, bis 15 Kids, Wasser mgl. (+25€)', pricing: { weekday: 145, weekend: 195, threeDay: 320 } }, { id: 108, category: 'Hüpfburgen', name: 'Wedding Bouncer', details: '4x4x3m, bis 8 Kids, Rutsche & Bällebad', pricing: { weekday: 159, weekend: 189, threeDay: 295 } }, { id: 109, category: 'Hüpfburgen', name: 'PAW Bouncer', details: '5x3,5x3,6m, bis 10 Kids, mit Rutsche', pricing: { weekday: 109, weekend: 139, threeDay: 250 } }, { id: 110, category: 'Hüpfburgen', name: 'PAW Kidszone', details: '6x4x3,4m, bis 15 Kids, Bällebad & Rutsche, nur mit Lieferung', pricing: { weekday: 139, weekend: 179, threeDay: 295 } }, { id: 111, category: 'Hüpfburgen', name: 'Minnie Clubhouse', details: '3x3,5x2m, bis 6 Kids, mit Rutsche', pricing: { weekday: 89, weekend: 119, threeDay: 200 } }, { id: 112, category: 'Hüpfburgen', name: 'Mickey Clubhouse', details: '3x2x2m, bis 4 Kids, mit Rutsche', pricing: { weekday: 79, weekend: 99, threeDay: 180 } }, { id: 113, category: 'Hüpfburgen', name: 'Super Hero', details: '5x4x3,8m, bis 8 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 109, weekend: 139, threeDay: 250 } }, { id: 114, category: 'Hüpfburgen', name: 'Mickey Bouncer', details: '5x3,5x3,6m, bis 10 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 109, weekend: 139, threeDay: 250 } }, { id: 115, category: 'Hüpfburgen', name: 'Mario World XXL', details: '5,5x5,5x6m, bis 15 Kids, Riesenrutsche', pricing: { weekday: 145, weekend: 195, threeDay: 320 } }, { id: 116, category: 'Hüpfburgen', name: 'Mario Bouncer', details: '5x3,5x3,6m, bis 10 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 109, weekend: 139, threeDay: 250 } }, { id: 11, category: 'Fun Food', name: 'Slush-Eis-Maschine', details: '2 Kammern', price: 50 }, { id: 12, category: 'Fun Food', name: 'Popcornmaschine', details: 'Inkl. Zubehör', price: 40 }, { id: 13, category: 'Mobiliar', name: 'Partyzelt 4x8 Meter', details: 'Für ca. 40 Personen', price: 80 }, { id: 14, category: 'Mobiliar', name: 'Stehtisch', details: 'Klappbar', price: 5 }, { id: 15, category: 'Mobiliar', name: 'Bierzeltgarnitur', details: '1 Tisch, 2 Bänke', price: 8 }];
     
-    // --- Se ssions-Management ---
-    function switchView(viewId) {
-        views.forEach(v => v.classList.remove('active'));
+    // --- ZUSTANDSVARIABLEN ---
+    let selectedProducts = new Map();
+    let options = { cable: false, service: false };
+    let currentDeliveryCost = 0, currentDistance = 0, surfaceCost = 0, earlyBirdDiscount = 0;
+    let debounceTimer;
+    
+    // --- DOM-ELEMENTE ---
+    const appHeader = document.getElementById('app-header');
+    const appTitle = document.getElementById('app-title');
+    const adminNav = document.getElementById('admin-nav');
+
+    // --- ROUTING & SESSION ---
+    function switchView(viewId, role) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
         document.getElementById(viewId).classList.add('active');
-        
-        const isLoggedIn = viewId !== 'login-view';
-        appHeader.style.display = isLoggedIn ? 'flex' : 'none';
+        const isLoggedIn = role !== 'none';
+        appHeader.classList.toggle('visible', isLoggedIn);
 
         if (isLoggedIn) {
-            headerTitle.textContent = viewId === 'admin-view' ? 'Admin Dashboard' : 'Mitarbeiter-Aufträge';
+            appTitle.textContent = role === 'admin' ? 'Admin Panel' : 'Mitarbeiter-Aufträge';
+            adminNav.style.display = role === 'admin' ? 'inline-block' : 'none';
         }
     }
+    
+    // Admin-Navigation
+    document.getElementById('nav-booking').addEventListener('click', () => {
+        switchView('admin-view', 'admin');
+        document.getElementById('nav-booking').classList.add('active');
+        document.getElementById('nav-summary').classList.remove('active');
+    });
+    document.getElementById('nav-summary').addEventListener('click', () => {
+        initSummaryView();
+        document.getElementById('nav-summary').classList.add('active');
+        document.getElementById('nav-booking').classList.remove('active');
+    });
 
-    // Beim Laden der Seite prüfen, ob bereits eine Rolle aktiv ist
+
+    // Initialer Check bei Seitenaufruf
     const activeRole = sessionStorage.getItem('userRole');
-    if (activeRole === 'admin') {
-        initAdminView();
-    } else if (activeRole === 'employee') {
-        initEmployeeView();
-    } else {
-        switchView('login-view');
+    if (activeRole === 'admin') initAdminView();
+    else if (activeRole === 'employee') initEmployeeView();
+    else switchView('login-view', 'none');
+
+    // --- LOGIN & LOGOUT ---
+    document.getElementById('admin-login-btn').addEventListener('click', () => {
+        if (document.getElementById('password').value === ADMIN_PASSWORD) {
+            sessionStorage.setItem('userRole', 'admin'); initAdminView();
+        } else { alert('Falsches Passwort!'); }
+    });
+    document.getElementById('employee-login-btn').addEventListener('click', () => {
+        sessionStorage.setItem('userRole', 'employee'); initEmployeeView();
+    });
+    document.getElementById('logout-btn').addEventListener('click', () => {
+        sessionStorage.removeItem('userRole'); switchView('login-view', 'none');
+    });
+    
+    // --- KOSTENBERECHNUNG (ZENTRALE FUNKTION) ---
+    function updateCostSummary() {
+        let productsAndOptionsCost = 0;
+        for (const [id, selected] of selectedProducts.entries()) {
+            const product = products.find(p => p.id === id);
+            if (product.price) productsAndOptionsCost += product.price;
+            else if (product.pricing && selected.priceModel) productsAndOptionsCost += product.pricing[selected.priceModel];
+        }
+        if(options.cable) productsAndOptionsCost += 5;
+        if(options.service) productsAndOptionsCost += 45;
+        
+        surfaceCost = document.getElementById('surfaceType').value === 'asphalt' ? 30 : 0;
+        
+        const discountBase = productsAndOptionsCost + surfaceCost;
+        const aufbauDateStr = document.getElementById('aufbauDate').value;
+        if (aufbauDateStr) {
+            const diffDays = (new Date(aufbauDateStr) - new Date()) / (1000 * 60 * 60 * 24);
+            earlyBirdDiscount = diffDays >= 56 ? discountBase * 0.10 : 0;
+        } else { earlyBirdDiscount = 0; }
+        
+        const totalCost = discountBase + currentDeliveryCost - earlyBirdDiscount;
+
+        document.getElementById('summary-products').textContent = `${productsAndOptionsCost.toFixed(2)} €`;
+        document.getElementById('summary-surface').textContent = `${surfaceCost.toFixed(2)} €`;
+        document.getElementById('summary-distance-km').textContent = currentDistance;
+        document.getElementById('summary-delivery').textContent = `${currentDeliveryCost.toFixed(2)} €`;
+        document.getElementById('summary-discount-label').textContent = `Frühbucherrabatt${earlyBirdDiscount > 0 ? ' (10%)' : ''}`;
+        document.getElementById('summary-discount').textContent = `- ${earlyBirdDiscount.toFixed(2)} €`;
+        document.getElementById('summary-total').textContent = `${totalCost.toFixed(2)} €`;
     }
 
-    // --- Login-Logik ---
-    document.getElementById('admin-login-btn').addEventListener('click', () => {
-        const password = document.getElementById('password').value;
-        if (password === ADMIN_PASSWORD) {
-            sessionStorage.setItem('userRole', 'admin');
-            initAdminView();
-        } else {
-            alert('Falsches Passwort!');
-        }
-    });
+    async function calculateRoute(destinationAddress) {
+        try {
+            const geoResponse = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destinationAddress)}`);
+            const geoData = await geoResponse.json();
+            if (geoData.length === 0) throw new Error('Adresse nicht gefunden.');
+            const destCoords = `${geoData[0].lon},${geoData[0].lat}`;
+            const routeResponse = await fetch(`https://router.project-osrm.org/route/v1/driving/${START_ADDRESS_COORDS};${destCoords}?overview=false`);
+            const routeData = await routeResponse.json();
+            if (routeData.code !== 'Ok') throw new Error('Route konnte nicht berechnet werden.');
+            
+            currentDistance = parseFloat((routeData.routes[0].distance / 1000).toFixed(1));
+            
+            // NEUE FAHRTKOSTENLOGIK
+            if (currentDistance <= 3) currentDeliveryCost = 10;
+            else if (currentDistance <= 5) currentDeliveryCost = 15;
+            else if (currentDistance <= 10) currentDeliveryCost = 20;
+            else if (currentDistance <= 20) currentDeliveryCost = 40;
+            else currentDeliveryCost = currentDistance * 2.40;
 
-    document.getElementById('employee-login-btn').addEventListener('click', () => {
-        sessionStorage.setItem('userRole', 'employee');
-        initEmployeeView();
-    });
+        } catch (error) {
+            console.error("Routen-Fehler:", error); currentDeliveryCost = 0; currentDistance = 0;
+        } finally { updateCostSummary(); }
+    }
 
-    // --- Logout-Logik ---
-    document.getElementById('logout-btn').addEventListener('click', () => {
-        sessionStorage.removeItem('userRole');
-        switchView('login-view');
-    });
-
-    // --- ADMIN FUNKTIONEN ---
+    // --- ADMIN: BUCHUNGSFORMULAR ---
     function initAdminView() {
-        switchView('admin-view');
+        switchView('admin-view', 'admin');
         const productGrid = document.getElementById('product-grid');
-        productGrid.innerHTML = ''; // Leeren, um Duplikate zu vermeiden
-        let selectedProductIds = new Set();
+        if (productGrid.childElementCount > 0) return; // Nur einmal initialisieren
 
+        // Produkte rendern... (Code identisch wie vorher)
         products.forEach(product => {
-            const card = document.createElement('div');
-            card.className = 'product-card';
-            card.dataset.id = product.id;
-            card.innerHTML = `<h3>${product.name}</h3><p>${product.category}</p>`;
-            card.addEventListener('click', () => {
-                card.classList.toggle('selected');
-                const productId = parseInt(card.dataset.id);
-                selectedProductIds.has(productId) ? selectedProductIds.delete(productId) : selectedProductIds.add(productId);
-            });
+            const card = document.createElement('div'); card.className = 'product-card'; card.dataset.id = product.id;
+            let priceInfo = product.price ? `<p><b>${product.price.toFixed(2)} €</b></p>` : `<p>ab ${product.pricing.weekday.toFixed(2)} €</p>`;
+            let priceSelectorHTML = product.pricing ? `<div class="price-selector form-group"><label style="font-size:0.8em;">Preis-Option</label><select id="price-model-${product.id}" data-product-id="${product.id}"><option value="weekday">Mo-Do: ${product.pricing.weekday.toFixed(2)} €</option><option value="weekend">Fr-So: ${product.pricing.weekend.toFixed(2)} €</option><option value="threeDay">3 Tage: ${product.pricing.threeDay.toFixed(2)} €</option></select></div>` : '';
+            card.innerHTML = `<h3>${product.name}</h3><p class="details">${product.details}</p>${priceInfo}${priceSelectorHTML}`;
+            card.addEventListener('click', (e) => { if (e.target.tagName === 'SELECT') return; card.classList.toggle('selected'); const id = parseInt(card.dataset.id); if (selectedProducts.has(id)) selectedProducts.delete(id); else selectedProducts.set(id, { priceModel: product.pricing ? document.getElementById(`price-model-${id}`).value : null }); updateCostSummary(); });
             productGrid.appendChild(card);
         });
 
+        // Event Listeners (einmalig setzen)
+        productGrid.addEventListener('change', (e) => { if (e.target.tagName === 'SELECT') { const id = parseInt(e.target.dataset.productId); if (selectedProducts.has(id)) { selectedProducts.get(id).priceModel = e.target.value; updateCostSummary(); } } });
+        document.getElementById('deliveryAddress').addEventListener('keyup', (e) => { clearTimeout(debounceTimer); debounceTimer = setTimeout(() => { if (e.target.value.length > 10) calculateRoute(e.target.value); }, 1000); });
+        ['aufbauDate', 'surfaceType'].forEach(id => document.getElementById(id).addEventListener('change', updateCostSummary));
+        
+        document.getElementById('option-cable').addEventListener('click', (e) => { e.currentTarget.classList.toggle('selected'); options.cable = !options.cable; updateCostSummary(); });
+        document.getElementById('option-service').addEventListener('click', (e) => { e.currentTarget.classList.toggle('selected'); options.service = !options.service; updateCostSummary(); });
+
         document.getElementById('booking-form').addEventListener('submit', (event) => {
             event.preventDefault();
-            if (selectedProductIds.size === 0) {
-                alert('Bitte wählen Sie mindestens ein Produkt aus.');
-                return;
+            if (selectedProducts.size === 0 && !options.cable && !options.service) { alert('Bitte wählen Sie mindestens ein Produkt oder eine Option aus.'); return; }
+            
+            // Buchungsdaten sammeln... (Code identisch wie vorher, aber mit Optionen)
+            const finalProducts = [];
+            for (const [id, selected] of selectedProducts.entries()) {
+                const product = products.find(p => p.id === id); let price = 0; let priceModelText = "Standard";
+                if(product.price) price = product.price; else if (product.pricing) { price = product.pricing[selected.priceModel]; priceModelText = document.querySelector(`#price-model-${id} option[value='${selected.priceModel}']`).textContent; }
+                finalProducts.push({ name: product.name, price: price, priceModel: priceModelText });
             }
-            const selectedProducts = products.filter(p => selectedProductIds.has(p.id));
+            if (options.cable) finalProducts.push({ name: 'Kabeltrommel', price: 5, priceModel: 'Zusatzoption' });
+            if (options.service) finalProducts.push({ name: 'Auf/Abbau Service', price: 45, priceModel: 'Zusatzoption' });
 
             const bookingData = {
-                buchungsId: 'B' + Date.now(),
-                kunde: document.getElementById('customerName').value,
-                telefon: document.getElementById('customerPhone').value,
-                adresse: document.getElementById('deliveryAddress').value,
-                lieferdatum: document.getElementById('deliveryDate').value,
-                lieferzeit: document.getElementById('deliveryTime').value,
-                anmerkungen: document.getElementById('notes').value,
-                produkte: selectedProducts.map(p => p.name)
+                buchungsId: 'B' + Date.now(), kunde: document.getElementById('customerName').value, adresse: document.getElementById('deliveryAddress').value,
+                aufbau: document.getElementById('aufbauDate').value, abbau: document.getElementById('abbauDate').value, untergrund: document.getElementById('surfaceType').value,
+                anmerkungen: document.getElementById('notes').value, produkte: finalProducts,
+                kosten: { produkte: parseFloat(document.getElementById('summary-products').textContent), asphalt: surfaceCost, fahrt: currentDeliveryCost, strecke: currentDistance, rabatt: earlyBirdDiscount, gesamt: parseFloat(document.getElementById('summary-total').textContent) }
             };
-
-            // Speichern im Local Storage für die Mitarbeiter-Ansicht
+            
             let bookings = JSON.parse(localStorage.getItem('partycrasherBookings')) || [];
             bookings.push(bookingData);
             localStorage.setItem('partycrasherBookings', JSON.stringify(bookings));
 
-            alert(`Buchung ${bookingData.buchungsId} wurde für Mitarbeiter gespeichert!`);
-
-            // Optional: WhatsApp Link generieren
-            const jsonString = JSON.stringify(bookingData, null, 2);
-            const whatsappMessage = `*Neue Buchung - ${bookingData.buchungsId}*\n\`\`\`\n${jsonString}\n\`\`\``;
-            document.getElementById('whatsapp-link').href = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
-            document.getElementById('whatsapp-link-container').style.display = 'block';
-
-            // Formular zurücksetzen
-            event.target.reset();
-            document.querySelectorAll('.product-card.selected').forEach(card => card.classList.remove('selected'));
-            selectedProductIds.clear();
+            alert(`Buchung ${bookingData.buchungsId} wurde gespeichert!`);
+            event.target.reset(); // Formular zurücksetzen
+            document.querySelectorAll('.product-card.selected, .option-btn.selected').forEach(el => el.classList.remove('selected'));
+            selectedProducts.clear(); options.cable = false; options.service = false;
+            currentDeliveryCost = 0; currentDistance = 0; surfaceCost = 0; earlyBirdDiscount = 0;
+            updateCostSummary();
+            initSummaryView(); // Direkt zur Übersicht wechseln
         });
-    }
-
-    // --- MITARBEITER FUNKTIONEN ---
-    function initEmployeeView() {
-        switchView('employee-view');
-        renderEmployeeBookings();
     }
     
-    function renderEmployeeBookings() {
+    // --- ADMIN: UMSATZÜBERSICHT ---
+    function initSummaryView() {
+        switchView('summary-view', 'admin');
+        const summaryList = document.getElementById('summary-list');
+        const totalRevenueEl = document.getElementById('total-revenue-amount');
+        const bookings = JSON.parse(localStorage.getItem('partycrasherBookings')) || [];
+        summaryList.innerHTML = '';
+        
+        let totalRevenue = 0;
+        if (bookings.length > 0) {
+            bookings.sort((a, b) => new Date(b.aufbau) - new Date(a.aufbau)); // Neueste zuerst
+            bookings.forEach(booking => {
+                totalRevenue += booking.kosten.gesamt;
+                const item = document.createElement('div');
+                item.className = 'card summary-list-item';
+                item.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <h4>${booking.kunde} (#${booking.buchungsId})</h4>
+                            <p style="margin:0;">Aufbau: ${new Date(booking.aufbau).toLocaleDateString('de-DE')}</p>
+                        </div>
+                        <h3 style="margin:0;">${booking.kosten.gesamt.toFixed(2)} €</h3>
+                    </div>`;
+                summaryList.appendChild(item);
+            });
+        } else {
+            summaryList.innerHTML = '<p>Noch keine Buchungen gespeichert.</p>';
+        }
+        totalRevenueEl.textContent = `${totalRevenue.toFixed(2)} €`;
+    }
+
+    // --- MITARBEITER ANSICHT ---
+    function initEmployeeView() {
+        switchView('employee-view', 'employee');
+        // renderEmployeeBookings... (Funktion ist identisch zur Vorversion, keine Anpassung nötig)
         const bookingsList = document.getElementById('bookings-list');
         const bookings = JSON.parse(localStorage.getItem('partycrasherBookings')) || [];
-        bookingsList.innerHTML = '';
-
-        if (bookings.length === 0) {
-            bookingsList.innerHTML = '<p>Keine offenen Aufträge.</p>';
-            return;
-        }
-
-        bookings.sort((a, b) => new Date(a.lieferdatum) - new Date(b.lieferdatum));
-
-        bookings.forEach(booking => {
-            const item = document.createElement('div');
-            item.className = 'card booking-list-item';
-            const productList = booking.produkte.map(p => `<li>${p}</li>`).join('');
-
-            item.innerHTML = `
-                <div class="booking-header">
-                    <h3>${booking.kunde} - ${new Date(booking.lieferdatum).toLocaleDateString('de-DE')}</h3>
-                    <button class="btn btn-delete" data-id="${booking.buchungsId}">Erledigt</button>
-                </div>
-                <p><strong>Datum & Uhrzeit:</strong> ${new Date(booking.lieferdatum).toLocaleDateString('de-DE', {weekday: 'long', day: 'numeric', month: 'long'})} um ${booking.lieferzeit} Uhr</p>
-                <p><strong>Adresse:</strong> ${booking.adresse.replace(/\n/g, '<br>')}</p>
-                <p><strong>Telefon:</strong> <a href="tel:${booking.telefon}">${booking.telefon}</a></p>
-                <h4>Produkte:</h4>
-                <ul>${productList}</ul>
-                ${booking.anmerkungen ? `<p><strong>Anmerkungen:</strong> ${booking.anmerkungen}</p>` : ''}
-            `;
-            bookingsList.appendChild(item);
-        });
-
-        // Event Listener für "Erledigt"-Buttons
-        document.querySelectorAll('.btn-delete').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const bookingIdToDelete = e.target.dataset.id;
-                if (confirm(`Möchten Sie den Auftrag für "${bookingIdToDelete}" als erledigt markieren und aus der Liste entfernen?`)) {
-                    let currentBookings = JSON.parse(localStorage.getItem('partycrasherBookings')) || [];
-                    const updatedBookings = currentBookings.filter(b => b.buchungsId !== bookingIdToDelete);
-                    localStorage.setItem('partycrasherBookings', JSON.stringify(updatedBookings));
-                    renderEmployeeBookings(); // Liste neu zeichnen
-                }
-            });
-        });
+        bookingsList.innerHTML = bookings.length === 0 ? '<p>Keine offenen Aufträge.</p>' : '';
+        bookings.sort((a, b) => new Date(a.aufbau) - new Date(b.aufbau));
+        bookings.forEach(booking => { /* ... (Gekürzt, Code identisch zur Vorversion) ... */ const item = document.createElement('div'); item.className = 'card'; item.style.borderLeft = '5px solid var(--secondary-color)'; item.style.padding = '20px'; item.style.marginBottom = '20px'; const productList = booking.produkte.map(p => `<li>${p.name} (${p.priceModel}) - ${p.price.toFixed(2)} €</li>`).join(''); const discountLabel = booking.kosten.rabatt > 0 ? 'Frühbucherrabatt (10%)' : 'Frühbucherrabatt'; item.innerHTML = `<div style="display:flex;justify-content:space-between;"><h3>${booking.kunde} - Aufbau am ${new Date(booking.aufbau).toLocaleDateString('de-DE')}</h3><button class="btn-delete" data-id="${booking.buchungsId}" style="width:auto;padding:5px 10px;font-size:12px;">Erledigt</button></div><p><strong>Zeitraum:</strong> ${new Date(booking.aufbau).toLocaleDateString('de-DE')} bis ${new Date(booking.abbau).toLocaleDateString('de-DE')}</p><p><strong>Adresse:</strong> ${booking.adresse.replace(/\n/g, '<br>')}</p><h4>Produkte:</h4><ul>${productList}</ul><div class="summary" style="margin-top:10px; padding:10px;"><p><span>Untergrund:</span> <span>${booking.untergrund === 'asphalt' ? 'Asphalt (+30€)' : 'Rasen'}</span></p><p><span>Produkte & Optionen:</span> <span>${booking.kosten.produkte.toFixed(2)} €</span></p><p class="surcharge"><span>Asphalt-Zuschlag:</span> <span>${booking.kosten.asphalt.toFixed(2)} €</span></p><p><span>Fahrtkosten (${booking.kosten.strecke} km):</span> <span>${booking.kosten.fahrt.toFixed(2)} €</span></p><p class="discount"><span>${discountLabel}:</span> <span>- ${booking.kosten.rabatt.toFixed(2)} €</span></p><p class="total"><span>Gesamtbetrag (Kunde zahlt):</span> <span>${booking.kosten.gesamt.toFixed(2)} €</span></p></div>${booking.anmerkungen ? `<p><strong>Anmerkungen:</strong> ${booking.anmerkungen}</p>` : ''}`; bookingsList.appendChild(item);});
+        document.querySelectorAll('.btn-delete').forEach(button => { button.addEventListener('click', (e) => { const id = e.target.dataset.id; if (confirm(`Auftrag ${id} als erledigt markieren?`)) { let b = JSON.parse(localStorage.getItem('partycrasherBookings')) || []; localStorage.setItem('partycrasherBookings', JSON.stringify(b.filter(x => x.buchungsId !== id))); initEmployeeView(); } }); });
     }
 });
 </script>

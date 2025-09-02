@@ -3,360 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partycrasher App</title>
+    <title>Party-Crasher - Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root {
-            --primary-color: #e8495f; --secondary-color: #075e54; --light-gray: #f4f7f6;
-            --dark-gray: #333; --white: #fff; --success-color: #28a745; --info-color: #007bff;
-        }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; background-color: var(--light-gray); color: var(--dark-gray); }
-        .container { max-width: 900px; margin: 20px auto; padding: 0 20px; }
-        .view { display: none; }
-        .view.active { display: block; }
-        .card { background-color: var(--white); border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; padding: 20px; }
-        h1, h2, h3 { margin-top: 0; }
-        h1 { color: var(--primary-color); }
-        h2 { border-bottom: 2px solid var(--light-gray); padding-bottom: 10px; }
-        .btn { display: inline-block; color: var(--white); padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; text-align: center; text-decoration: none; width: 100%; box-sizing: border-box; margin-top: 10px; transition: background-color 0.2s; }
-        .btn:disabled { background-color: #ccc; cursor: not-allowed; }
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
-        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        
-        /* Header & Navigation */
-        header { background-color: var(--white); padding: 10px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: none; justify-content: space-between; align-items: center; }
-        header.visible { display: flex; }
-        #app-title { font-size: 24px; margin: 0; }
-        #admin-nav button { background: none; border: none; color: var(--dark-gray); cursor: pointer; padding: 8px 12px; font-size: 16px; border-radius: 5px; }
-        #admin-nav button.active { background-color: var(--light-gray); font-weight: bold; }
-        .btn-logout { background-color: #6c757d; width: auto; margin-left: 20px; }
-
-        /* Zusatzoptionen Buttons */
-        .option-buttons { display: flex; gap: 10px; margin-bottom: 15px; }
-        .option-btn { flex: 1; background-color: #e9ecef; border: 1px solid #ced4da; color: var(--dark-gray); padding: 10px; border-radius: 5px; cursor: pointer; text-align: center; }
-        .option-btn.selected { background-color: var(--info-color); color: var(--white); border-color: var(--info-color); }
-        
-        /* Übersicht Seite */
-        #summary-view .total-revenue { background-color: var(--secondary-color); color: white; padding: 20px; text-align: center; border-radius: 8px; margin-bottom: 20px; }
-        #summary-view .total-revenue h2 { color: white; }
-        #summary-view .total-revenue span { font-size: 2em; font-weight: bold; }
-        .summary-list-item { border-left: 5px solid var(--info-color); margin-bottom: 15px; padding: 15px; }
-        
-        /* Andere Stile */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 15px; }
-        .product-card { border: 1px solid #ddd; border-radius: 8px; padding: 15px; cursor: pointer; display: flex; flex-direction: column; }
-        .product-card.selected { border-color: var(--primary-color); background-color: #fff8f9; border-width: 2px; }
-        .product-card h3 { margin: 0 0 5px 0; font-size: 1em; }
-        .summary { margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 5px; }
-        .summary p { margin: 8px 0; display: flex; justify-content: space-between; font-size: 1em; }
-        .summary p.discount { color: var(--success-color); }
-        .summary .total { font-size: 1.3em; font-weight: bold; border-top: 2px solid #ccc; padding-top: 10px; margin-top: 10px; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .bounce-animation { animation: bounce 2s infinite; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-10px); } 60% { transform: translateY(-5px); } }
+        .surface-btn.selected, .service-btn.selected { border-color: #8b5cf6 !important; background-color: #f3f4f6 !important; box-shadow: 0 0 0 2px #8b5cf6; }
+        .product-card.in-cart { border-color: #10b981; border-width: 2px; }
+        #cart-button { transition: transform 0.2s ease-out; }
+        .category-tab { transition: all 0.2s ease-in-out; border-bottom: 2px solid transparent; }
+        .category-tab.active { border-bottom-color: #ffffff; color: #ffffff; transform: translateY(-2px); }
     </style>
 </head>
-<body>
+<body class="gradient-bg min-h-screen">
 
-    <div id="login-view" class="view active">
-        <div class="container"><div class="card" style="max-width: 400px; margin: 50px auto;">
-            <h1>Willkommen!</h1>
-            <div class="form-group"><label for="password">Admin-Passwort</label><input type="password" id="password" placeholder="Passwort eingeben"></div>
-            <button id="admin-login-btn" class="btn" style="background-color: var(--primary-color);">Als Admin anmelden</button>
-            <hr style="margin: 20px 0; border-top: 1px solid var(--light-gray);">
-            <button id="employee-login-btn" class="btn" style="background-color: var(--secondary-color);">Als Mitarbeiter fortfahren</button>
-        </div></div>
-    </div>
-    
-    <header id="app-header">
-        <div>
-            <span id="app-title"></span>
-            <nav id="admin-nav" style="display: none; margin-left: 20px; display: inline-block;">
-                <button id="nav-booking" class="active">Neue Buchung</button>
-                <button id="nav-summary">Umsatzübersicht</button>
-            </nav>
-        </div>
-        <button id="logout-btn" class="btn-logout">Abmelden</button>
-    </header>
-
-    <div id="admin-view" class="view">
-        <div class="container">
-            <div class="card">
-                <h2>1. Produkte auswählen</h2>
-                <div id="product-grid" class="product-grid"></div>
-            </div>
-            <div class="card">
-                <h2>2. Buchungsdetails</h2>
-                <form id="booking-form">
-                    <div class="form-group"><label for="customerName">Kundenname</label><input type="text" id="customerName" required></div>
-                    <div style="display: flex; gap: 20px;">
-                        <div class="form-group" style="flex:1;"><label for="aufbauDate">Aufbau am</label><input type="date" id="aufbauDate" required></div>
-                        <div class="form-group" style="flex:1;"><label for="abbauDate">Abbau am</label><input type="date" id="abbauDate" required></div>
-                    </div>
-                    <div class="form-group"><label for="deliveryAddress">Lieferadresse</label><textarea id="deliveryAddress" rows="2" required placeholder="Straße, Hausnr, PLZ, Ort"></textarea></div>
-                    <div class="form-group">
-                        <label>Untergrund</label>
-                        <select id="surfaceType"><option value="rasen">Rasen</option><option value="asphalt">Asphalt (+30,00 €)</option></select>
-                    </div>
-                    <div class="form-group">
-                        <label>Zusatzoptionen</label>
-                        <div class="option-buttons">
-                            <div id="option-cable" class="option-btn">Kabeltrommel (+5,00 €)</div>
-                            <div id="option-service" class="option-btn">Auf/Abbau Service (+45,00 €)</div>
-                        </div>
-                    </div>
-                    <div class="form-group"><label for="notes">Anmerkungen</label><textarea id="notes" rows="3"></textarea></div>
-                    
-                    <div class="summary">
-                        <h3>Buchungsübersicht</h3>
-                        <p><span>Produkte & Optionen</span> <span id="summary-products">0,00 €</span></p>
-                        <p><span>Asphalt-Zuschlag</span> <span id="summary-surface">0,00 €</span></p>
-                        <p><span>Fahrtstrecke (<span id="summary-distance-km">0</span> km)</span> <span id="summary-delivery">0,00 €</span></p>
-                        <p class="discount"><span id="summary-discount-label">Frühbucherrabatt</span> <span id="summary-discount">- 0,00 €</span></p>
-                        <p class="total"><span>Gesamtbetrag</span> <span id="summary-total">0,00 €</span></p>
-                    </div>
-
-                    <button type="submit" id="save-booking-btn" class="btn" style="background-color: var(--primary-color);">Buchung speichern & zur Übersicht</button>
-                </form>
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+            <div class="text-center mb-8"><div class="text-6xl mb-4 bounce-animation">🏰</div><h1 class="text-3xl font-bold text-gray-800 mb-2">Party-Crasher</h1><p class="text-gray-600">Verleih Management</p></div>
+            <div class="space-y-4">
+                <button id="employeeLoginBtn" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">👥 Mitarbeiter Zugang</button>
+                <button id="adminLoginBtn" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">🔐 Admin Zugang</button>
             </div>
         </div>
     </div>
-    
-    <div id="summary-view" class="view">
-        <div class="container">
-            <div class="total-revenue">
-                <h2>Gesamteinnahmen</h2>
-                <span id="total-revenue-amount">0,00 €</span>
+
+    <div id="adminPasswordScreen" class="hidden min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+            <div class="text-center mb-8"><div class="text-4xl mb-4">🔐</div><h2 class="text-2xl font-bold text-gray-800 mb-2">Admin Zugang</h2><p class="text-gray-600">Passwort eingeben</p></div>
+            <div class="space-y-4">
+                <input type="password" id="adminPassword" placeholder="Admin Passwort" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                <button id="adminPasswordSubmitBtn" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-lg transition duration-200">Anmelden</button>
+                <button id="backToLoginBtn" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-lg transition duration-200">Zurück</button>
             </div>
-            <div id="summary-list"></div>
         </div>
     </div>
 
-    <div id="employee-view" class="view">
-        <div class="container"><div class="card">
-            <h2>Offene Aufträge</h2>
-            <div id="bookings-list"><p>Keine Aufträge vorhanden.</p></div>
-        </div></div>
+    <div id="adminDashboard" class="hidden min-h-screen">
+        <nav class="bg-gradient-to-r from-purple-600 to-blue-600 shadow-xl sticky top-0 z-20">
+            <div class="max-w-7xl mx-auto px-4"><div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4"><div class="bg-white rounded-full p-2 shadow-lg"><span class="text-2xl">🏰</span></div><div><h1 class="text-xl font-bold text-white">Party-Crasher</h1><p class="text-purple-100 text-sm">Admin Dashboard</p></div></div>
+                <div id="main-nav" class="hidden md:flex items-center space-x-2"></div>
+                <button id="logoutBtnAdmin" class="px-3 py-2 bg-red-500/90 text-white rounded-lg font-medium hover:bg-opacity-100 shadow-lg flex items-center space-x-2"><span>🚪</span><span class="hidden md:inline">Abmelden</span></button>
+            </div></div>
+        </nav>
+        <div class="max-w-7xl mx-auto p-4 md:p-6">
+            <section id="overviewSection" class="mb-12"><h2 class="text-3xl font-bold text-white mb-6">Produkte</h2><div id="categoryTabs" class="flex flex-wrap -mb-px border-b border-white/20"></div><div id="productGridContainer" class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div></section>
+            <section id="ordersSection" class="mb-12"><div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold text-white">Auftragsübersicht</h2><button id="exportOrdersBtn" class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-sm">📤 JSON Export</button></div><div class="bg-white rounded-lg shadow-lg overflow-hidden"><div id="ordersList" class="divide-y divide-gray-200"></div></div></section>
+            <section id="settingsSection"><h2 class="text-2xl font-bold text-white mb-6">Einstellungen</h2><div id="settingsContainer" class="bg-white rounded-lg shadow-lg p-6"></div></section>
+        </div>
     </div>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // --- KONFIGURATION & DATEN ---
-    const ADMIN_PASSWORD = "1234";
-    const START_ADDRESS_COORDS = "5.7663,51.5835";
-    const products = [ /* ... (Gekürzt für Lesbarkeit - der Code ist identisch zur Vorversion) ... */ { id: 101, category: 'Hüpfburgen', name: 'Summer Party', details: '4,9x4x4m, bis 8 Kids, mit Rutsche', pricing: { weekday: 99, weekend: 129, threeDay: 245 } }, { id: 102, category: 'Hüpfburgen', name: 'Hawaii Box', details: '4,8x4x3,5m, bis 8 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 99, weekend: 129, threeDay: 245 } }, { id: 103, category: 'Hüpfburgen', name: 'Fußball Hütte', details: '5,5x5x4,6m, bis 12 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 139, weekend: 179, threeDay: 295 } }, { id: 104, category: 'Hüpfburgen', name: 'Haifisch Becken', details: '5,4x5x3,8m, bis 12 Kids, Wasserrutsche mgl. (+25€)', pricing: { weekday: 139, weekend: 179, threeDay: 295 } }, { id: 105, category: 'Hüpfburgen', name: 'Piratenschiff', details: '6,2x3,8x3,6m, bis 8 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 99, weekend: 129, threeDay: 245 } }, { id: 106, category: 'Hüpfburgen', name: 'Dino Doubleslide', details: '5,4x6,2x3,4m, bis 15 Kids, Wasser mgl. (+25€)', pricing: { weekday: 145, weekend: 195, threeDay: 320 } }, { id: 107, category: 'Hüpfburgen', name: 'Monster-Truck Doubleslide', details: '5,4x6,2x3,4m, bis 15 Kids, Wasser mgl. (+25€)', pricing: { weekday: 145, weekend: 195, threeDay: 320 } }, { id: 108, category: 'Hüpfburgen', name: 'Wedding Bouncer', details: '4x4x3m, bis 8 Kids, Rutsche & Bällebad', pricing: { weekday: 159, weekend: 189, threeDay: 295 } }, { id: 109, category: 'Hüpfburgen', name: 'PAW Bouncer', details: '5x3,5x3,6m, bis 10 Kids, mit Rutsche', pricing: { weekday: 109, weekend: 139, threeDay: 250 } }, { id: 110, category: 'Hüpfburgen', name: 'PAW Kidszone', details: '6x4x3,4m, bis 15 Kids, Bällebad & Rutsche, nur mit Lieferung', pricing: { weekday: 139, weekend: 179, threeDay: 295 } }, { id: 111, category: 'Hüpfburgen', name: 'Minnie Clubhouse', details: '3x3,5x2m, bis 6 Kids, mit Rutsche', pricing: { weekday: 89, weekend: 119, threeDay: 200 } }, { id: 112, category: 'Hüpfburgen', name: 'Mickey Clubhouse', details: '3x2x2m, bis 4 Kids, mit Rutsche', pricing: { weekday: 79, weekend: 99, threeDay: 180 } }, { id: 113, category: 'Hüpfburgen', name: 'Super Hero', details: '5x4x3,8m, bis 8 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 109, weekend: 139, threeDay: 250 } }, { id: 114, category: 'Hüpfburgen', name: 'Mickey Bouncer', details: '5x3,5x3,6m, bis 10 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 109, weekend: 139, threeDay: 250 } }, { id: 115, category: 'Hüpfburgen', name: 'Mario World XXL', details: '5,5x5,5x6m, bis 15 Kids, Riesenrutsche', pricing: { weekday: 145, weekend: 195, threeDay: 320 } }, { id: 116, category: 'Hüpfburgen', name: 'Mario Bouncer', details: '5x3,5x3,6m, bis 10 Kids, mit Rutsche & Hindernisse', pricing: { weekday: 109, weekend: 139, threeDay: 250 } }, { id: 11, category: 'Fun Food', name: 'Slush-Eis-Maschine', details: '2 Kammern', price: 50 }, { id: 12, category: 'Fun Food', name: 'Popcornmaschine', details: 'Inkl. Zubehör', price: 40 }, { id: 13, category: 'Mobiliar', name: 'Partyzelt 4x8 Meter', details: 'Für ca. 40 Personen', price: 80 }, { id: 14, category: 'Mobiliar', name: 'Stehtisch', details: 'Klappbar', price: 5 }, { id: 15, category: 'Mobiliar', name: 'Bierzeltgarnitur', details: '1 Tisch, 2 Bänke', price: 8 }];
+    <div id="employeeDashboard" class="hidden min-h-screen">
+        <nav class="bg-gradient-to-r from-blue-600 to-green-500 shadow-xl sticky top-0 z-20">
+            <div class="max-w-7xl mx-auto px-4"><div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-4"><div class="bg-white rounded-full p-2 shadow-lg"><span class="text-2xl">🏰</span></div><div><h1 class="text-xl font-bold text-white">Party-Crasher</h1><p class="text-blue-100 text-sm">Mitarbeiter Dashboard</p></div></div>
+                <div class="flex items-center space-x-2"><button id="importDataBtn" class="px-3 py-2 bg-white/20 text-white rounded-lg font-medium hover:bg-white/30 flex items-center space-x-1 shadow-lg text-sm"><span>📥</span><span>Importieren</span></button><button id="logoutBtnEmployee" class="px-3 py-2 bg-red-500/90 text-white rounded-lg font-medium hover:bg-opacity-100 shadow-lg flex items-center space-x-1 text-sm"><span>🚪</span><span>Abmelden</span></button></div>
+            </div></div>
+        </nav>
+        <div class="max-w-7xl mx-auto p-4 md:p-6">
+            <h2 class="text-2xl font-bold text-white mb-6">Heutige & Zukünftige Aufträge</h2>
+            <div id="employeeBookingsList" class="space-y-4"></div>
+        </div>
+    </div>
+
+    <button id="cart-button" class="hidden fixed bottom-6 right-6 bg-green-500 text-white rounded-full shadow-lg w-16 h-16 flex items-center justify-center z-30 hover:bg-green-600">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+        <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-6 w-6 flex items-center justify-center border-2 border-white">0</span>
+    </button>
+
+    <div id="bookingModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div class="p-6"><div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800">Neuer Auftrag</h3><button class="close-modal-btn text-gray-500 hover:text-gray-700 text-2xl">×</button></div><div id="cartItemsList" class="mb-6 space-y-3"></div><form id="bookingForm" class="space-y-6"></form></div>
+        </div>
+    </div>
+    <div id="importModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl">
+            <div class="p-6"><div class="flex justify-between items-center mb-6"><h3 class="text-2xl font-bold text-gray-800">JSON Daten Importieren</h3><button class="close-modal-btn text-gray-500 hover:text-gray-700 text-2xl">×</button></div><div class="space-y-4"><div><label class="block text-sm font-medium text-gray-700 mb-2">JSON Daten einfügen:</label><textarea id="jsonInput" rows="10" placeholder='{"orders": [...], "products": [...], "settings": {...}}' class="w-full px-3 py-2 border border-gray-300 rounded-md font-mono text-sm"></textarea></div><div class="flex space-x-4"><button id="processImportBtn" class="flex-1 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg">📥 Daten Importieren</button><button class="close-modal-btn flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-lg">Abbrechen</button></div></div></div>
+        </div>
+    </div>
     
-    // --- ZUSTANDSVARIABLEN ---
-    let selectedProducts = new Map();
-    let options = { cable: false, service: false };
-    let currentDeliveryCost = 0, currentDistance = 0, surfaceCost = 0, earlyBirdDiscount = 0;
-    let debounceTimer;
-    
-    // --- DOM-ELEMENTE ---
-    const appHeader = document.getElementById('app-header');
-    const appTitle = document.getElementById('app-title');
-    const adminNav = document.getElementById('admin-nav');
-
-    // --- ROUTING & SESSION ---
-    function switchView(viewId, role) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(viewId).classList.add('active');
-        const isLoggedIn = role !== 'none';
-        appHeader.classList.toggle('visible', isLoggedIn);
-
-        if (isLoggedIn) {
-            appTitle.textContent = role === 'admin' ? 'Admin Panel' : 'Mitarbeiter-Aufträge';
-            adminNav.style.display = role === 'admin' ? 'inline-block' : 'none';
-        }
-    }
-    
-    // Admin-Navigation
-    document.getElementById('nav-booking').addEventListener('click', () => {
-        switchView('admin-view', 'admin');
-        document.getElementById('nav-booking').classList.add('active');
-        document.getElementById('nav-summary').classList.remove('active');
-    });
-    document.getElementById('nav-summary').addEventListener('click', () => {
-        initSummaryView();
-        document.getElementById('nav-summary').classList.add('active');
-        document.getElementById('nav-booking').classList.remove('active');
-    });
-
-
-    // Initialer Check bei Seitenaufruf
-    const activeRole = sessionStorage.getItem('userRole');
-    if (activeRole === 'admin') initAdminView();
-    else if (activeRole === 'employee') initEmployeeView();
-    else switchView('login-view', 'none');
-
-    // --- LOGIN & LOGOUT ---
-    document.getElementById('admin-login-btn').addEventListener('click', () => {
-        if (document.getElementById('password').value === ADMIN_PASSWORD) {
-            sessionStorage.setItem('userRole', 'admin'); initAdminView();
-        } else { alert('Falsches Passwort!'); }
-    });
-    document.getElementById('employee-login-btn').addEventListener('click', () => {
-        sessionStorage.setItem('userRole', 'employee'); initEmployeeView();
-    });
-    document.getElementById('logout-btn').addEventListener('click', () => {
-        sessionStorage.removeItem('userRole'); switchView('login-view', 'none');
-    });
-    
-    // --- KOSTENBERECHNUNG (ZENTRALE FUNKTION) ---
-    function updateCostSummary() {
-        let productsAndOptionsCost = 0;
-        for (const [id, selected] of selectedProducts.entries()) {
-            const product = products.find(p => p.id === id);
-            if (product.price) productsAndOptionsCost += product.price;
-            else if (product.pricing && selected.priceModel) productsAndOptionsCost += product.pricing[selected.priceModel];
-        }
-        if(options.cable) productsAndOptionsCost += 5;
-        if(options.service) productsAndOptionsCost += 45;
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- DATEN & ZUSTAND ---
+        let currentUser = null;
+        let cart = [];
+        let activeCategory = '';
+        let products = [
+            { id: 1, category: "Hüpfburgen", name: "Summer Party", weekdayPrice: 99, weekendPrice: 129, threeDayPrice: 245, features: "mit Rutsche" },
+            { id: 2, category: "Hüpfburgen", name: "Hawaii Box", weekdayPrice: 99, weekendPrice: 129, threeDayPrice: 245, features: "mit Rutsche & Hindernisse" },
+            { id: 3, category: "Hüpfburgen", name: "Fußball Hütte", weekdayPrice: 139, weekendPrice: 179, threeDayPrice: 295, features: "mit Rutsche & Hindernisse" },
+            { id: 4, category: "Hüpfburgen", name: "Haifisch Becken", weekdayPrice: 139, weekendPrice: 179, threeDayPrice: 295, features: "auch als Wasserrutsche nutzbar" },
+            { id: 5, category: "Hüpfburgen", name: "Piratenschiff", weekdayPrice: 99, weekendPrice: 129, threeDayPrice: 245, features: "mit Rutsche & Hindernisse" },
+            { id: 6, category: "Hüpfburgen", name: "Dino Doubleslide", weekdayPrice: 145, weekendPrice: 195, threeDayPrice: 320, features: "mit Doppelrutsche, als Wasserrutsche nutzbar" },
+            { id: 7, category: "Hüpfburgen", name: "Monster-Truck Doubleslide", weekdayPrice: 145, weekendPrice: 195, threeDayPrice: 320, features: "mit Doppelrutsche, als Wasserrutsche nutzbar" },
+            { id: 8, category: "Hüpfburgen", name: "Wedding Bouncer", weekdayPrice: 159, weekendPrice: 189, threeDayPrice: 295, features: "mit Rutsche & Bällebad, selbst gestalten!" },
+            { id: 9, category: "Hüpfburgen", name: "PAW Bouncer", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "mit Rutsche" },
+            { id: 10, category: "Hüpfburgen", name: "PAW Kidszone", weekdayPrice: 139, weekendPrice: 179, threeDayPrice: 295, features: "perfekt für kleine Kids, Bälle Bad, Hüpfburg & Rutsche" },
+            { id: 11, category: "Hüpfburgen", name: "Minnie Clubhouse", weekdayPrice: 89, weekendPrice: 119, threeDayPrice: 200, features: "mit Rutsche" },
+            { id: 12, category: "Hüpfburgen", name: "Mickey Clubhouse", weekdayPrice: 79, weekendPrice: 99, threeDayPrice: 180, features: "mit Rutsche" },
+            { id: 13, category: "Hüpfburgen", name: "Super Hero", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "mit Rutsche & Hindernisse" },
+            { id: 14, category: "Hüpfburgen", name: "Mickey Bouncer", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "mit Rutsche & Hindernisse" },
+            { id: 15, category: "Hüpfburgen", name: "Mario World XXL", weekdayPrice: 145, weekendPrice: 195, threeDayPrice: 320, features: "mit riesen Rutsche & Hindernisse" },
+            { id: 16, category: "Hüpfburgen", name: "Mario Bouncer", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "mit Rutsche & Hindernisse" },
+            { id: 201, category: "Spiel & Spaß", name: "Wasserrutsche mit Pool", weekdayPrice: 129, weekendPrice: 149, threeDayPrice: 280, features: "Großer Badespaß für den Garten" },
+            { id: 202, category: "Spiel & Spaß", name: "Whack-A-Mole", weekdayPrice: 149, weekendPrice: 189, threeDayPrice: 295, features: "Aufblasbares Reaktionsspiel" },
+            { id: 203, category: "Spiel & Spaß", name: "Sumo Fight", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "Set für 2 Personen mit Matte" },
+            { id: 204, category: "Spiel & Spaß", name: "Boxautomat", weekdayPrice: 89, weekendPrice: 99, threeDayPrice: null, features: "Mit digitaler Punkteanzeige" },
+            { id: 205, category: "Spiel & Spaß", name: "Maskottchen - Minnie", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 206, category: "Spiel & Spaß", name: "Maskottchen - Mickey", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 207, category: "Spiel & Spaß", name: "Maskottchen - Daisy", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 208, category: "Spiel & Spaß", name: "Maskottchen - Donald", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 209, category: "Spiel & Spaß", name: "Maskottchen - Goofy", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 210, category: "Spiel & Spaß", name: "Maskottchen - Winnie P.", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 211, category: "Spiel & Spaß", name: "Maskottchen - Tiger", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 212, category: "Spiel & Spaß", name: "Maskottchen - Gender Dolls", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Für Gender Reveal Partys" },
+            { id: 213, category: "Spiel & Spaß", name: "Maskottchen - Mario", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 214, category: "Spiel & Spaß", name: "Maskottchen - Yoshi", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 215, category: "Spiel & Spaß", name: "Maskottchen - Toad", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 216, category: "Spiel & Spaß", name: "Maskottchen - SpongeBob", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 217, category: "Spiel & Spaß", name: "Maskottchen - Patrick", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 218, category: "Spiel & Spaß", name: "Maskottchen - Niloya", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 219, category: "Spiel & Spaß", name: "Maskottchen - PAW Serie", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Chase, Marshall, Skye etc." },
+            { id: 220, category: "Spiel & Spaß", name: "Maskottchen - Pirat", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
+            { id: 221, category: "Spiel & Spaß", name: "XXL Bausteine", weekdayPrice: 19, weekendPrice: 25, threeDayPrice: null, features: "Set mit 86 großen Bausteinen" },
+            { id: 222, category: "Spiel & Spaß", name: "Tauziehen", weekdayPrice: 8, weekendPrice: 12, threeDayPrice: null, features: "Dickes Seil für Teams" },
+            { id: 223, category: "Spiel & Spaß", name: "Basketballkorb", weekdayPrice: 14, weekendPrice: 19, threeDayPrice: null, features: "Mobil und höhenverstellbar" },
+            { id: 224, category: "Spiel & Spaß", name: "Riesen Wackelturm", weekdayPrice: 9, weekendPrice: 14, threeDayPrice: null, features: "XXL Jenga aus Holz" },
+            { id: 225, category: "Spiel & Spaß", name: "Dosenwerfen", weekdayPrice: 8, weekendPrice: 10, threeDayPrice: null, features: "Set mit Bällen und Dosen" },
+            { id: 226, category: "Spiel & Spaß", name: "Pfeil und Bogen Set", weekdayPrice: 8, weekendPrice: 10, threeDayPrice: null, features: "Sicheres Set für Kinder" },
+            { id: 227, category: "Spiel & Spaß", name: "XXL 4-Gewinnt", weekdayPrice: 14, weekendPrice: 19, threeDayPrice: null, features: "Großes Strategiespiel" },
+            { id: 228, category: "Spiel & Spaß", name: "Basketballautomat", weekdayPrice: 14, weekendPrice: 19, threeDayPrice: null, features: "Mit 2 Körben für Duelle" },
+            { id: 229, category: "Spiel & Spaß", name: "Wasserspieltisch", weekdayPrice: 14, weekendPrice: 19, threeDayPrice: null, features: "Für Kleinkinder" },
+            { id: 230, category: "Spiel & Spaß", name: "Wasserfall Denkspiel", weekdayPrice: 14, weekendPrice: 22, threeDayPrice: null, features: "Logikspiel für Kinder" },
+            { id: 231, category: "Spiel & Spaß", name: "Kickertisch", weekdayPrice: 14, weekendPrice: 19, threeDayPrice: null, features: "Stabiler Tischkicker" },
+            { id: 232, category: "Spiel & Spaß", name: "Fußballtor", weekdayPrice: 22, weekendPrice: 27, threeDayPrice: null, features: "Großes, stabiles Tor" },
+            { id: 233, category: "Spiel & Spaß", name: "Elektro Kinderauto", weekdayPrice: 15, weekendPrice: 20, threeDayPrice: null, features: "Preis ab 15€, je nach Modell" },
+            { id: 234, category: "Spiel & Spaß", name: "Arcade Spielautomat", weekdayPrice: 45, weekendPrice: 55, threeDayPrice: null, features: "Preis ab 45€, mit vielen Retro-Spielen" },
+            { id: 235, category: "Spiel & Spaß", name: "Wasserschlacht Set", weekdayPrice: 20, weekendPrice: 25, threeDayPrice: null, features: "Preis ab 20€, großes Set für Teams" }
+        ];
+        let orders = [];
+        let settings = { asphaltFee: 30, cableFee: 5, serviceFee: 45, travel0to3: 10, travel5: 15, travel10: 20, travel20: 40, travelPerKm: 2.40 };
         
-        surfaceCost = document.getElementById('surfaceType').value === 'asphalt' ? 30 : 0;
-        
-        const discountBase = productsAndOptionsCost + surfaceCost;
-        const aufbauDateStr = document.getElementById('aufbauDate').value;
-        if (aufbauDateStr) {
-            const diffDays = (new Date(aufbauDateStr) - new Date()) / (1000 * 60 * 60 * 24);
-            earlyBirdDiscount = diffDays >= 56 ? discountBase * 0.10 : 0;
-        } else { earlyBirdDiscount = 0; }
-        
-        const totalCost = discountBase + currentDeliveryCost - earlyBirdDiscount;
-
-        document.getElementById('summary-products').textContent = `${productsAndOptionsCost.toFixed(2)} €`;
-        document.getElementById('summary-surface').textContent = `${surfaceCost.toFixed(2)} €`;
-        document.getElementById('summary-distance-km').textContent = currentDistance;
-        document.getElementById('summary-delivery').textContent = `${currentDeliveryCost.toFixed(2)} €`;
-        document.getElementById('summary-discount-label').textContent = `Frühbucherrabatt${earlyBirdDiscount > 0 ? ' (10%)' : ''}`;
-        document.getElementById('summary-discount').textContent = `- ${earlyBirdDiscount.toFixed(2)} €`;
-        document.getElementById('summary-total').textContent = `${totalCost.toFixed(2)} €`;
-    }
-
-    async function calculateRoute(destinationAddress) {
-        try {
-            const geoResponse = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(destinationAddress)}`);
-            const geoData = await geoResponse.json();
-            if (geoData.length === 0) throw new Error('Adresse nicht gefunden.');
-            const destCoords = `${geoData[0].lon},${geoData[0].lat}`;
-            const routeResponse = await fetch(`https://router.project-osrm.org/route/v1/driving/${START_ADDRESS_COORDS};${destCoords}?overview=false`);
-            const routeData = await routeResponse.json();
-            if (routeData.code !== 'Ok') throw new Error('Route konnte nicht berechnet werden.');
-            
-            currentDistance = parseFloat((routeData.routes[0].distance / 1000).toFixed(1));
-            
-            // NEUE FAHRTKOSTENLOGIK
-            if (currentDistance <= 3) currentDeliveryCost = 10;
-            else if (currentDistance <= 5) currentDeliveryCost = 15;
-            else if (currentDistance <= 10) currentDeliveryCost = 20;
-            else if (currentDistance <= 20) currentDeliveryCost = 40;
-            else currentDeliveryCost = currentDistance * 2.40;
-
-        } catch (error) {
-            console.error("Routen-Fehler:", error); currentDeliveryCost = 0; currentDistance = 0;
-        } finally { updateCostSummary(); }
-    }
-
-    // --- ADMIN: BUCHUNGSFORMULAR ---
-    function initAdminView() {
-        switchView('admin-view', 'admin');
-        const productGrid = document.getElementById('product-grid');
-        if (productGrid.childElementCount > 0) return; // Nur einmal initialisieren
-
-        // Produkte rendern... (Code identisch wie vorher)
-        products.forEach(product => {
-            const card = document.createElement('div'); card.className = 'product-card'; card.dataset.id = product.id;
-            let priceInfo = product.price ? `<p><b>${product.price.toFixed(2)} €</b></p>` : `<p>ab ${product.pricing.weekday.toFixed(2)} €</p>`;
-            let priceSelectorHTML = product.pricing ? `<div class="price-selector form-group"><label style="font-size:0.8em;">Preis-Option</label><select id="price-model-${product.id}" data-product-id="${product.id}"><option value="weekday">Mo-Do: ${product.pricing.weekday.toFixed(2)} €</option><option value="weekend">Fr-So: ${product.pricing.weekend.toFixed(2)} €</option><option value="threeDay">3 Tage: ${product.pricing.threeDay.toFixed(2)} €</option></select></div>` : '';
-            card.innerHTML = `<h3>${product.name}</h3><p class="details">${product.details}</p>${priceInfo}${priceSelectorHTML}`;
-            card.addEventListener('click', (e) => { if (e.target.tagName === 'SELECT') return; card.classList.toggle('selected'); const id = parseInt(card.dataset.id); if (selectedProducts.has(id)) selectedProducts.delete(id); else selectedProducts.set(id, { priceModel: product.pricing ? document.getElementById(`price-model-${id}`).value : null }); updateCostSummary(); });
-            productGrid.appendChild(card);
-        });
-
-        // Event Listeners (einmalig setzen)
-        productGrid.addEventListener('change', (e) => { if (e.target.tagName === 'SELECT') { const id = parseInt(e.target.dataset.productId); if (selectedProducts.has(id)) { selectedProducts.get(id).priceModel = e.target.value; updateCostSummary(); } } });
-        document.getElementById('deliveryAddress').addEventListener('keyup', (e) => { clearTimeout(debounceTimer); debounceTimer = setTimeout(() => { if (e.target.value.length > 10) calculateRoute(e.target.value); }, 1000); });
-        ['aufbauDate', 'surfaceType'].forEach(id => document.getElementById(id).addEventListener('change', updateCostSummary));
-        
-        document.getElementById('option-cable').addEventListener('click', (e) => { e.currentTarget.classList.toggle('selected'); options.cable = !options.cable; updateCostSummary(); });
-        document.getElementById('option-service').addEventListener('click', (e) => { e.currentTarget.classList.toggle('selected'); options.service = !options.service; updateCostSummary(); });
-
-        document.getElementById('booking-form').addEventListener('submit', (event) => {
-            event.preventDefault();
-            if (selectedProducts.size === 0 && !options.cable && !options.service) { alert('Bitte wählen Sie mindestens ein Produkt oder eine Option aus.'); return; }
-            
-            // Buchungsdaten sammeln... (Code identisch wie vorher, aber mit Optionen)
-            const finalProducts = [];
-            for (const [id, selected] of selectedProducts.entries()) {
-                const product = products.find(p => p.id === id); let price = 0; let priceModelText = "Standard";
-                if(product.price) price = product.price; else if (product.pricing) { price = product.pricing[selected.priceModel]; priceModelText = document.querySelector(`#price-model-${id} option[value='${selected.priceModel}']`).textContent; }
-                finalProducts.push({ name: product.name, price: price, priceModel: priceModelText });
-            }
-            if (options.cable) finalProducts.push({ name: 'Kabeltrommel', price: 5, priceModel: 'Zusatzoption' });
-            if (options.service) finalProducts.push({ name: 'Auf/Abbau Service', price: 45, priceModel: 'Zusatzoption' });
-
-            const bookingData = {
-                buchungsId: 'B' + Date.now(), kunde: document.getElementById('customerName').value, adresse: document.getElementById('deliveryAddress').value,
-                aufbau: document.getElementById('aufbauDate').value, abbau: document.getElementById('abbauDate').value, untergrund: document.getElementById('surfaceType').value,
-                anmerkungen: document.getElementById('notes').value, produkte: finalProducts,
-                kosten: { produkte: parseFloat(document.getElementById('summary-products').textContent), asphalt: surfaceCost, fahrt: currentDeliveryCost, strecke: currentDistance, rabatt: earlyBirdDiscount, gesamt: parseFloat(document.getElementById('summary-total').textContent) }
-            };
-            
-            let bookings = JSON.parse(localStorage.getItem('partycrasherBookings')) || [];
-            bookings.push(bookingData);
-            localStorage.setItem('partycrasherBookings', JSON.stringify(bookings));
-
-            alert(`Buchung ${bookingData.buchungsId} wurde gespeichert!`);
-            event.target.reset(); // Formular zurücksetzen
-            document.querySelectorAll('.product-card.selected, .option-btn.selected').forEach(el => el.classList.remove('selected'));
-            selectedProducts.clear(); options.cable = false; options.service = false;
-            currentDeliveryCost = 0; currentDistance = 0; surfaceCost = 0; earlyBirdDiscount = 0;
-            updateCostSummary();
-            initSummaryView(); // Direkt zur Übersicht wechseln
-        });
-    }
-    
-    // --- ADMIN: UMSATZÜBERSICHT ---
-    function initSummaryView() {
-        switchView('summary-view', 'admin');
-        const summaryList = document.getElementById('summary-list');
-        const totalRevenueEl = document.getElementById('total-revenue-amount');
-        const bookings = JSON.parse(localStorage.getItem('partycrasherBookings')) || [];
-        summaryList.innerHTML = '';
-        
-        let totalRevenue = 0;
-        if (bookings.length > 0) {
-            bookings.sort((a, b) => new Date(b.aufbau) - new Date(a.aufbau)); // Neueste zuerst
-            bookings.forEach(booking => {
-                totalRevenue += booking.kosten.gesamt;
-                const item = document.createElement('div');
-                item.className = 'card summary-list-item';
-                item.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-                        <div>
-                            <h4>${booking.kunde} (#${booking.buchungsId})</h4>
-                            <p style="margin:0;">Aufbau: ${new Date(booking.aufbau).toLocaleDateString('de-DE')}</p>
-                        </div>
-                        <h3 style="margin:0;">${booking.kosten.gesamt.toFixed(2)} €</h3>
-                    </div>`;
-                summaryList.appendChild(item);
+        // --- FUNKTIONEN ---
+        function init(){
+            loadData();
+            document.getElementById('employeeLoginBtn').addEventListener('click', showEmployeeLogin);
+            document.getElementById('adminLoginBtn').addEventListener('click', showAdminLogin);
+            document.getElementById('adminPasswordSubmitBtn').addEventListener('click', checkAdminPassword);
+            document.getElementById('backToLoginBtn').addEventListener('click', backToLogin);
+            document.getElementById('logoutBtnAdmin').addEventListener('click', logout);
+            document.getElementById('logoutBtnEmployee').addEventListener('click', logout);
+            document.getElementById('exportOrdersBtn').addEventListener('click', exportOrders);
+            document.getElementById('importDataBtn').addEventListener('click', importData);
+            document.getElementById('processImportBtn').addEventListener('click', processJsonImport);
+            document.getElementById('cart-button').addEventListener('click', openBookingModal);
+            document.querySelectorAll('.close-modal-btn').forEach(btn => {
+                const modal = btn.closest('#bookingModal, #importModal');
+                if (modal) {
+                    btn.addEventListener('click', () => modal.classList.add('hidden'));
+                }
             });
-        } else {
-            summaryList.innerHTML = '<p>Noch keine Buchungen gespeichert.</p>';
+            buildAdminNav();
+            buildBookingForm();
+            buildSettingsForm();
         }
-        totalRevenueEl.textContent = `${totalRevenue.toFixed(2)} €`;
-    }
-
-    // --- MITARBEITER ANSICHT ---
-    function initEmployeeView() {
-        switchView('employee-view', 'employee');
-        // renderEmployeeBookings... (Funktion ist identisch zur Vorversion, keine Anpassung nötig)
-        const bookingsList = document.getElementById('bookings-list');
-        const bookings = JSON.parse(localStorage.getItem('partycrasherBookings')) || [];
-        bookingsList.innerHTML = bookings.length === 0 ? '<p>Keine offenen Aufträge.</p>' : '';
-        bookings.sort((a, b) => new Date(a.aufbau) - new Date(b.aufbau));
-        bookings.forEach(booking => { /* ... (Gekürzt, Code identisch zur Vorversion) ... */ const item = document.createElement('div'); item.className = 'card'; item.style.borderLeft = '5px solid var(--secondary-color)'; item.style.padding = '20px'; item.style.marginBottom = '20px'; const productList = booking.produkte.map(p => `<li>${p.name} (${p.priceModel}) - ${p.price.toFixed(2)} €</li>`).join(''); const discountLabel = booking.kosten.rabatt > 0 ? 'Frühbucherrabatt (10%)' : 'Frühbucherrabatt'; item.innerHTML = `<div style="display:flex;justify-content:space-between;"><h3>${booking.kunde} - Aufbau am ${new Date(booking.aufbau).toLocaleDateString('de-DE')}</h3><button class="btn-delete" data-id="${booking.buchungsId}" style="width:auto;padding:5px 10px;font-size:12px;">Erledigt</button></div><p><strong>Zeitraum:</strong> ${new Date(booking.aufbau).toLocaleDateString('de-DE')} bis ${new Date(booking.abbau).toLocaleDateString('de-DE')}</p><p><strong>Adresse:</strong> ${booking.adresse.replace(/\n/g, '<br>')}</p><h4>Produkte:</h4><ul>${productList}</ul><div class="summary" style="margin-top:10px; padding:10px;"><p><span>Untergrund:</span> <span>${booking.untergrund === 'asphalt' ? 'Asphalt (+30€)' : 'Rasen'}</span></p><p><span>Produkte & Optionen:</span> <span>${booking.kosten.produkte.toFixed(2)} €</span></p><p class="surcharge"><span>Asphalt-Zuschlag:</span> <span>${booking.kosten.asphalt.toFixed(2)} €</span></p><p><span>Fahrtkosten (${booking.kosten.strecke} km):</span> <span>${booking.kosten.fahrt.toFixed(2)} €</span></p><p class="discount"><span>${discountLabel}:</span> <span>- ${booking.kosten.rabatt.toFixed(2)} €</span></p><p class="total"><span>Gesamtbetrag (Kunde zahlt):</span> <span>${booking.kosten.gesamt.toFixed(2)} €</span></p></div>${booking.anmerkungen ? `<p><strong>Anmerkungen:</strong> ${booking.anmerkungen}</p>` : ''}`; bookingsList.appendChild(item);});
-        document.querySelectorAll('.btn-delete').forEach(button => { button.addEventListener('click', (e) => { const id = e.target.dataset.id; if (confirm(`Auftrag ${id} als erledigt markieren?`)) { let b = JSON.parse(localStorage.getItem('partycrasherBookings')) || []; localStorage.setItem('partycrasherBookings', JSON.stringify(b.filter(x => x.buchungsId !== id))); initEmployeeView(); } }); });
-    }
-});
-</script>
-
+        function buildAdminNav(){document.getElementById('main-nav').innerHTML=`<button class="px-3 py-2 text-white rounded-lg font-medium hover:bg-white/20" onclick="scrollToSection('overviewSection')">Produkte</button><button class="px-3 py-2 text-white rounded-lg font-medium hover:bg-white/20" onclick="scrollToSection('ordersSection')">Aufträge</button><button class="px-3 py-2 text-white rounded-lg font-medium hover:bg-white/20" onclick="scrollToSection('settingsSection')">Einstellungen</button>`;}
+        function buildBookingForm(){document.getElementById('bookingForm').innerHTML=`<div><label class="block text-sm font-medium text-gray-700">Kunde</label><input type="text" id="customerName" required class="w-full px-3 py-2 border border-gray-300 rounded-md"></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="block text-sm font-medium text-gray-700">Von (Datum)</label><input type="date" id="startDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md"></div><div><label class="block text-sm font-medium text-gray-700">Bis (Datum)</label><input type="date" id="endDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md"></div></div><div><label class="block text-sm font-medium text-gray-700">Untergrund</label><div class="grid grid-cols-2 gap-3"><button type="button" id="grassBtn" class="surface-btn p-3 border-2 border-gray-300 rounded-lg text-center">🌱 Rasen</button><button type="button" id="asphaltBtn" class="surface-btn p-3 border-2 border-gray-300 rounded-lg text-center">🛣️ Asphalt</button></div><input type="hidden" id="surface"></div><div><label class="block text-sm font-medium text-gray-700">Zusatzleistungen</label><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><button type="button" id="kabeltrommelBtn" class="service-btn p-3 border-2 border-gray-300 rounded-lg text-center">🔌 Kabeltrommel</button><button type="button" id="aufbauServiceBtn" class="service-btn p-3 border-2 border-gray-300 rounded-lg text-center">🔧 Auf-/Abbau Service</button></div><input type="hidden" id="asphaltPauschale"><input type="hidden" id="kabeltrommel"><input type="hidden" id="aufbauService"></div><div><label class="block text-sm font-medium text-gray-700">Adresse</label><input type="text" id="address" required placeholder="Straße, PLZ Ort" class="w-full px-3 py-2 border border-gray-300 rounded-md"><div id="travelCostInfo" class="mt-2 text-sm text-gray-600"></div></div><div class="border-t pt-4"><h4 class="font-semibold text-gray-700 mb-2">Manuelle Rabatte</h4><div class="grid grid-cols-2 gap-4"><div><label class="block text-sm font-medium text-gray-700">Rabatt (%)</label><input type="number" id="manualDiscountPercent" placeholder="z.B. 10" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div><div><label class="block text-sm font-medium text-gray-700">Rabatt (€)</label><input type="number" id="manualDiscountAmount" placeholder="z.B. 25" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div></div></div><div class="bg-gray-50 p-4 rounded-lg mt-4"><h4 class="font-semibold text-gray-800 mb-3">Kostenübersicht</h4><div id="costBreakdown" class="space-y-2 text-sm"></div><div class="border-t pt-2 mt-3"><div class="flex justify-between font-bold text-lg"><span>Gesamtsumme:</span><span id="totalCost">0,00 €</span></div></div></div><div class="flex space-x-4 mt-6"><button type="submit" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg">Buchung Bestätigen</button><button type="button" class="close-modal-btn flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 font-semibold py-3 px-6 rounded-lg">Abbrechen</button></div>`;document.getElementById('bookingForm').addEventListener('submit',handleBookingSubmit);document.getElementById('grassBtn').addEventListener('click',()=>selectSurface('grass'));document.getElementById('asphaltBtn').addEventListener('click',()=>selectSurface('asphalt'));document.getElementById('kabeltrommelBtn').addEventListener('click',()=>toggleService('kabeltrommel'));document.getElementById('aufbauServiceBtn').addEventListener('click',()=>toggleService('aufbauService'));}
+        function buildSettingsForm(){document.getElementById('settingsContainer').innerHTML=`<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div><h3 class="text-lg font-semibold mb-4">Zusatzkosten</h3><div class="space-y-3"><div><label class="block text-sm font-medium text-gray-700 mb-1">Asphalt Pauschale (€)</label><input type="number" id="asphaltFee" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div><div><label class="block text-sm font-medium text-gray-700 mb-1">Kabeltrommel (€)</label><input type="number" id="cableFee" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div><div><label class="block text-sm font-medium text-gray-700 mb-1">Auf-/Abbau Service (€)</label><input type="number" id="serviceFee" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div></div></div><div><h3 class="text-lg font-semibold mb-4">Fahrtkosten</h3><div class="space-y-3"><div><label class="block text-sm font-medium text-gray-700 mb-1">0-3 km (€)</label><input type="number" id="travel0to3" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div><div><label class="block text-sm font-medium text-gray-700 mb-1">bis 5 km (€)</label><input type="number" id="travel5" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div><div><label class="block text-sm font-medium text-gray-700 mb-1">bis 10 km (€)</label><input type="number" id="travel10" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div><div><label class="block text-sm font-medium text-gray-700 mb-1">bis 20 km (€)</label><input type="number" id="travel20" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div><div><label class="block text-sm font-medium text-gray-700 mb-1">ab 20 km (€/km)</label><input type="number" step="0.01" id="travelPerKm" class="w-full px-3 py-2 border border-gray-300 rounded-md"></div></div></div></div><button id="saveSettingsBtn" class="mt-6 bg-purple-500 hover:bg-purple-600 text-white px-6 py-2 rounded-lg font-medium">Einstellungen Speichern</button>`;document.getElementById('saveSettingsBtn').addEventListener('click',saveSettings);}
+        function loadData(){const d1=localStorage.getItem('partyCrasherOrders'),d2=localStorage.getItem('partyCrasherSettings'),d3=localStorage.getItem('partyCrasherProducts');if(d1)orders=JSON.parse(d1);if(d2)settings=Object.assign(settings,JSON.parse(d2));if(d3)products=JSON.parse(d3);}
+        function saveData(){localStorage.setItem('partyCrasherOrders',JSON.stringify(orders));localStorage.setItem('partyCrasherSettings',JSON.stringify(settings));localStorage.setItem('partyCrasherProducts',JSON.stringify(products));}
+        function toggleCartItem(id){const i=cart.findIndex(item=>item.productId===id);if(i>-1){cart.splice(i,1);}else{const p=products.find(p=>p.id===id);cart.push({productId:id,priceModel:p.threeDayPrice?'weekend':'standard',overridePrice:null});}updateCartUI();}
+        function updateCartUI(){const btn=document.getElementById('cart-button'),count=document.getElementById('cart-count');if(cart.length>0){btn.classList.remove('hidden');count.textContent=cart.length;btn.style.transform='scale(1.1)';setTimeout(()=>btn.style.transform='scale(1)',200);}else{btn.classList.add('hidden');}document.querySelectorAll('[id^="product-card-"]').forEach(card=>{const btn=card.querySelector('button');if(!card||!btn)return;const id=parseInt(card.id.split('-')[2]);const inCart=cart.some(item=>item.productId===id);card.classList.toggle('in-cart',inCart);btn.textContent=inCart?'Entfernen':'Hinzufügen';btn.classList.toggle('bg-purple-500',!inCart);btn.classList.toggle('hover:bg-purple-600',!inCart);btn.classList.toggle('bg-red-500',inCart);btn.classList.toggle('hover:bg-red-600',inCart);});}
+        function removeFromCartAndRerenderModal(id){const i=cart.findIndex(item=>item.productId===id);if(i>-1)cart.splice(i,1);if(cart.length===0){closeBookingModal();}else{renderCartInModal();calculateCosts();}updateCartUI();}
+        function updateCartItemPriceModel(id,model){const item=cart.find(i=>i.productId===id);if(item){item.priceModel=model;item.overridePrice=null;renderCartInModal();calculateCosts();}}
+        function updateCartItemOverridePrice(id,price){const item=cart.find(i=>i.productId===id);if(item){item.overridePrice=price===''?null:parseFloat(price);}calculateCosts();}
+        function scrollToSection(id){document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+        function showEmployeeLogin(){currentUser='employee';document.getElementById('loginScreen').classList.add('hidden');document.getElementById('employeeDashboard').classList.remove('hidden');renderEmployeeBookings();}
+        function showAdminLogin(){document.getElementById('loginScreen').classList.add('hidden');document.getElementById('adminPasswordScreen').classList.remove('hidden');}
+        function checkAdminPassword(){if(document.getElementById('adminPassword').value==='admin123'){currentUser='admin';document.getElementById('adminPasswordScreen').classList.add('hidden');document.getElementById('adminDashboard').classList.remove('hidden');initAdminView();renderOrders();loadSettingsToForm();}else{alert('Falsches Passwort!');}}
+        function backToLogin(){document.getElementById('adminPasswordScreen').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');document.getElementById('adminPassword').value='';}
+        function logout(){currentUser=null;cart=[];updateCartUI();document.getElementById('adminDashboard').classList.add('hidden');document.getElementById('employeeDashboard').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');document.getElementById('adminPassword').value='';}
+        function initAdminView(){renderCategoryTabs();switchCategory([...new Set(products.map(p=>p.category))][0]);}
+        function renderCategoryTabs(){const cont=document.getElementById('categoryTabs');cont.innerHTML='';const cats=[...new Set(products.map(p=>p.category))];cats.forEach(cat=>{const btn=document.createElement('button');btn.id=`tab-${cat.replace(/[^a-zA-Z0-9]/g,'-')}`;btn.className='category-tab text-white/70 font-semibold py-2 px-4';btn.textContent=cat;btn.onclick=()=>switchCategory(cat);cont.appendChild(btn);});}
+        function switchCategory(cat){activeCategory=cat;document.querySelectorAll('.category-tab').forEach(t=>t.classList.remove('active'));document.getElementById(`tab-${cat.replace(/[^a-zA-Z0-9]/g,'-')}`).classList.add('active');renderProductGrid();}
+        function renderProductGrid(){const cont=document.getElementById('productGridContainer');cont.innerHTML='';products.filter(p=>p.category===activeCategory).forEach(p=>{const card=document.createElement('div');card.id=`product-card-${p.id}`;card.className="bg-white rounded-lg shadow-lg p-5 flex flex-col";card.innerHTML=`<h3 class="text-lg font-bold text-gray-800 mb-2">${p.name}</h3><div class="space-y-1 mb-3 text-xs text-gray-600 flex-grow">${p.features?`<p>• ${p.features}</p>`:''}</div><div class="border-t pt-2 mt-2"><p class="text-sm text-gray-600">Mo-Do: <span class="font-semibold">${p.weekdayPrice}€</span></p><p class="text-sm text-gray-600">Fr-So: <span class="font-semibold">${p.weekendPrice}€</span></p>${p.threeDayPrice?`<p class="text-sm text-gray-600">3 Tage: <span class="font-semibold">${p.threeDayPrice}€</span></p>`:''}</div><button id="product-btn-${p.id}" class="mt-4 bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg font-medium w-full">Hinzufügen</button>`;card.querySelector('button').onclick=()=>toggleCartItem(p.id);cont.appendChild(card);});updateCartUI();}
+        function renderCartInModal(){const cont=document.getElementById('cartItemsList');cont.innerHTML='<h4 class="text-lg font-semibold text-gray-700 border-b pb-2 mb-3">Ausgewählte Produkte</h4>';if(cart.length===0){cont.innerHTML+='<p class="text-gray-500">Der Warenkorb ist leer.</p>';return;}cart.forEach(item=>{const p=products.find(pr=>pr.id===item.productId);let priceSelectorHTML='';let calculatedPrice=p.weekdayPrice;if(p.threeDayPrice){const start=document.getElementById('startDate').value,end=document.getElementById('endDate').value;if(item.priceModel==='threeDay'){calculatedPrice=p.threeDayPrice;}else if(start&&end&&new Date(end)>=new Date(start)){calculatedPrice=0;const days=Math.ceil((new Date(end)-new Date(start))/(1e3*60*60*24))+1;for(let i=0;i<days;i++){const d=new Date(start);d.setDate(d.getDate()+i);const day=d.getDay();const isWk=(day===0||day===5||day===6);calculatedPrice+=(item.priceModel==='weekend'&&isWk)?p.weekendPrice:p.weekdayPrice;}}else{calculatedPrice=p.weekendPrice;}priceSelectorHTML=`<select onchange="updateCartItemPriceModel(${p.id}, this.value)" class="w-32 text-xs border-gray-300 rounded-md shadow-sm">${['weekday','weekend','threeDay'].map(m=>{if(!p.threeDayPrice&&m==='threeDay')return '';return `<option value="${m}" ${item.priceModel===m?'selected':''}>${m==='weekday'?'Mo-Do':m==='weekend'?'Fr-So':'3 Tage'}</option>`;}).join('')}</select>`;}const finalPrice=item.overridePrice??calculatedPrice;cont.innerHTML+=`<div class="grid grid-cols-3 items-center gap-2 bg-gray-50 p-2 rounded-lg"><span class="font-medium text-gray-800 col-span-1">${p.name}</span><div class="col-span-1">${priceSelectorHTML}</div><div class="flex items-center gap-1"><input type="number" value="${finalPrice.toFixed(2)}" oninput="updateCartItemOverridePrice(${p.id}, this.value)" placeholder="Preis" class="w-20 text-right px-2 py-1 border border-gray-300 rounded-md text-sm"><button type="button" onclick="removeFromCartAndRerenderModal(${p.id})" class="text-red-500 hover:text-red-700 text-2xl font-bold">×</button></div></div>`;});}
+        function openBookingModal(){if(cart.length===0){alert("Bitte fügen Sie zuerst Produkte zum Auftrag hinzu.");return;}renderCartInModal();document.getElementById('bookingModal').classList.remove('hidden');const today=new Date().toISOString().split('T')[0];document.getElementById('startDate').min=today;document.getElementById('endDate').min=today;['startDate','endDate','manualDiscountPercent','manualDiscountAmount'].forEach(id=>{const el=document.getElementById(id);el.addEventListener('input',calculateCosts);});const addr=document.getElementById('address');addr.addEventListener('input',handleAddressInput);calculateCosts();}
+        function closeBookingModal(){document.getElementById('bookingModal').classList.add('hidden');document.getElementById('bookingForm').reset();document.querySelectorAll('.surface-btn.selected, .service-btn.selected').forEach(b=>b.classList.remove('selected'));}
+        function handleAddressInput(){if(this.value.length>5)calculateDistance();else{document.getElementById('address').dataset.distance=0;document.getElementById('travelCostInfo').innerHTML='';calculateCosts();}}
+        function selectSurface(s){document.querySelectorAll('.surface-btn').forEach(b=>b.classList.remove('selected'));document.getElementById(s+'Btn').classList.add('selected');document.getElementById('surface').value=s;document.getElementById('asphaltPauschale').value=(s==='asphalt')?'true':'';calculateCosts();}
+        function toggleService(id){const btn=document.getElementById(id+'Btn'),input=document.getElementById(id);btn.classList.toggle('selected');input.value=btn.classList.contains('selected')?'true':'';calculateCosts();}
+        function calculateCosts(){let pCost=0;cart.forEach(item=>{if(item.overridePrice!==null&&!isNaN(item.overridePrice)){pCost+=parseFloat(item.overridePrice);}else{const p=products.find(pr=>pr.id===item.productId);if(p.threeDayPrice){if(item.priceModel==='threeDay'){pCost+=p.threeDayPrice;}else{const start=document.getElementById('startDate').value,end=document.getElementById('endDate').value;if(start&&end&&new Date(end)>=new Date(start)){pCost=0;const days=Math.ceil((new Date(end)-new Date(start))/(1e3*60*60*24))+1;for(let i=0;i<days;i++){const d=new Date(start);d.setDate(d.getDate()+i);const day=d.getDay();const isWk=(day===0||day===5||day===6);pCost+=(item.priceModel==='weekend'&&isWk)?p.weekendPrice:p.weekdayPrice;}}else{pCost+=p.weekendPrice;}}}else{pCost+=p.weekdayPrice;}});let sub=pCost;if(document.getElementById('asphaltPauschale').value==='true')sub+=settings.asphaltFee;if(document.getElementById('kabeltrommel').value==='true')sub+=settings.cableFee;if(document.getElementById('aufbauService').value==='true')sub+=settings.serviceFee;let travel=0;const dist=parseFloat(document.getElementById('address').dataset.distance||0);if(dist>0){if(dist<=3)travel=settings.travel0to3;else if(dist<=5)travel=settings.travel5;else if(dist<=10)travel=settings.travel10;else if(dist<=20)travel=settings.travel20;else travel=dist*settings.travelPerKm;}const subTotalWithTravel=sub+travel;const discPerc=parseFloat(document.getElementById('manualDiscountPercent').value)||0;const discAmnt=parseFloat(document.getElementById('manualDiscountAmount').value)||0;const percVal=subTotalWithTravel*(discPerc/100);const totalDisc=percVal+discAmnt;let total=subTotalWithTravel-totalDisc;const breakdown=[];breakdown.push(`Produkte & Optionen: ${sub.toFixed(2)} €`);if(travel>0)breakdown.push(`Fahrtkosten (${dist} km): ${travel.toFixed(2)} €`);if(totalDisc>0)breakdown.push(`<span class="text-green-600">Rabatt: -${totalDisc.toFixed(2)} €</span>`);document.getElementById('costBreakdown').innerHTML=breakdown.map(item=>`<div class="flex justify-between">${item}</div>`).join('');document.getElementById('totalCost').textContent=`${total.toFixed(2)} €`;}
+        function calculateDistance(){const addr=document.getElementById('address').value.toLowerCase();let dist=15;const loc={'45964':1,'45966':2,'gladbeck':1,'45968':4,'bottrop':4,'45879':7,'gelsenkirchen':8};const match=addr.match(/\b(\d{5})\b/);if(match&&loc[match[1]]){dist=loc[match[1]];}else{for(const[l,d] of Object.entries(loc)){if(!isNaN(l))continue;if(addr.includes(l)){dist=d;break;}}}dist=Math.max(1,dist+Math.floor(Math.random()*3)-1);document.getElementById('address').dataset.distance=dist;let travel=0;if(dist<=3)travel=settings.travel0to3;else if(dist<=5)travel=settings.travel5;else if(dist<=10)travel=settings.travel10;else if(dist<=20)travel=settings.travel20;else travel=dist*settings.travelPerKm;document.getElementById('travelCostInfo').innerHTML=`📍 Geschätzte Entfernung: ${dist} km <br>💰 Fahrtkosten: ${travel.toFixed(2)} €`;calculateCosts();}
+        function handleBookingSubmit(e){e.preventDefault();const finalCart=cart.map(item=>{const p=products.find(pr=>pr.id===item.productId);let finalPrice=item.overridePrice;if(finalPrice===null||isNaN(finalPrice)){if(p.threeDayPrice&&item.priceModel==='threeDay'){finalPrice=p.threeDayPrice;}else{const start=document.getElementById('startDate').value,end=document.getElementById('endDate').value;if(start&&end&&new Date(end)>=new Date(start)){finalPrice=0;const days=Math.ceil((new Date(end)-new Date(start))/(1e3*60*60*24))+1;for(let i=0;i<days;i++){const d=new Date(start);d.setDate(d.getDate()+i);const day=d.getDay(),isWk=(day===0||day===5||day===6);finalPrice+=(item.priceModel==='weekend'&&isWk)?p.weekendPrice:p.weekdayPrice;}}}}return{...p,finalPrice:finalPrice,priceModel:item.priceModel,};});const newOrder={id:Date.now(),customerName:document.getElementById('customerName').value,startDate:document.getElementById('startDate').value,endDate:document.getElementById('endDate').value,address:document.getElementById('address').value,products:finalCart,totalCost:parseFloat(document.getElementById('totalCost').textContent.replace(',','.')),manualDiscountPercent:parseFloat(document.getElementById('manualDiscountPercent').value)||0,manualDiscountAmount:parseFloat(document.getElementById('manualDiscountAmount').value)||0,createdAt:new Date().toISOString()};orders.push(newOrder);saveData();alert('Auftrag gespeichert!');cart=[];updateCartUI();closeBookingModal();renderOrders();}
+        function renderOrders(){const list=document.getElementById('ordersList');list.innerHTML='';if(orders.length===0){list.innerHTML='<p class="p-4 text-center text-gray-500">Keine Aufträge vorhanden.</p>';return;}orders.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).forEach(order=>{list.innerHTML+=`<div class="p-4"><div class="flex justify-between"><div><p class="font-semibold">${order.customerName} - ${new Date(order.startDate).toLocaleDateString('de-DE')}</p><p class="text-sm text-gray-600">${order.products.map(p=>p.name).join(', ')}</p></div><p class="text-right font-bold text-green-600">${order.totalCost.toFixed(2)} €</p></div></div>`;});}
+        function renderEmployeeBookings(){const cont=document.getElementById('employeeBookingsList');cont.innerHTML='';const today=new Date();today.setHours(0,0,0,0);const active=orders.filter(o=>new Date(o.endDate)>=today).sort((a,b)=>new Date(a.startDate)-new Date(b.startDate));if(active.length===0){cont.innerHTML='<div class="bg-white/80 rounded-lg shadow-lg p-6 text-center text-gray-700"><p class="font-semibold">Keine aktiven Aufträge.</p><p class="text-sm mt-2">Es wurden entweder keine Aufträge importiert oder alle Aufträge liegen in der Vergangenheit.</p></div>';return;}active.forEach(o=>{cont.innerHTML+=`<div class="bg-white rounded-lg shadow-lg p-6 space-y-3"><div class="flex justify-between items-start"><h3 class="text-xl font-bold text-gray-800">${o.customerName}</h3><span class="text-lg font-bold text-green-600">${o.totalCost.toFixed(2)} €</span></div><div><p class="text-sm text-gray-500"><strong>Zeitraum:</strong> ${new Date(o.startDate).toLocaleDateString('de-DE')} - ${new Date(o.endDate).toLocaleDateString('de-DE')}</p><p class="text-sm text-gray-500"><strong>Adresse:</strong> <a href="https://maps.google.com/?q=$${encodeURIComponent(o.address)}" target="_blank" class="text-blue-600 hover:underline">${o.address}</a></p></div><div class="border-t pt-3"><h4 class="font-semibold text-gray-700 mb-2">Gebuchte Produkte</h4><ul class="list-disc list-inside text-sm space-y-1">${o.products.map(p=>`<li>${p.name} (${p.finalPrice.toFixed(2)} €)</li>`).join('')}</ul></div></div>`;});}
+        function loadSettingsToForm(){Object.keys(settings).forEach(key=>{const el=document.getElementById(key);if(el)el.value=settings[key];});}
+        function saveSettings(){Object.keys(settings).forEach(key=>{const el=document.getElementById(key);if(el)settings[key]=parseFloat(el.value);});saveData();alert('Einstellungen gespeichert!');}
+        function exportOrders(){const dataStr=JSON.stringify({orders,products,settings},null,2);const url=URL.createObjectURL(new Blob([dataStr],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=`party-crasher-export-${new Date().toISOString().split('T')[0]}.json`;a.click();URL.revokeObjectURL(url);}
+        function importData(){document.getElementById('importModal').classList.remove('hidden');}
+        function closeImportModal(){document.getElementById('importModal').classList.add('hidden');document.getElementById('jsonInput').value='';}
+        function processJsonImport(){const json=document.getElementById('jsonInput').value.trim();if(!json)return;try{const data=JSON.parse(json);if(data.orders)orders=data.orders;if(data.products)products=data.products;if(data.settings)settings=Object.assign(settings,data.settings);saveData();if(currentUser==='employee'){renderEmployeeBookings();}closeImportModal();alert('Daten erfolgreich importiert!');}catch(e){alert('Fehler: Ungültiges JSON Format!');}}
+        
+        init();
+    });
+    </script>
 </body>
 </html>

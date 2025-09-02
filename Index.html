@@ -96,14 +96,10 @@
             // Hüpfburgen
             { id: 1, category: "Hüpfburgen", name: "Summer Party", weekdayPrice: 99, weekendPrice: 129, threeDayPrice: 245, features: "mit Rutsche" },
             { id: 2, category: "Hüpfburgen", name: "Hawaii Box", weekdayPrice: 99, weekendPrice: 129, threeDayPrice: 245, features: "mit Rutsche & Hindernisse" },
-            { id: 3, category: "Hüpfburgen", name: "Fußball Hütte", weekdayPrice: 139, weekendPrice: 179, threeDayPrice: 295, features: "mit Rutsche & Hindernisse" },
-            { id: 4, category: "Hüpfburgen", name: "Haifisch Becken", weekdayPrice: 139, weekendPrice: 179, threeDayPrice: 295, features: "auch als Wasserrutsche nutzbar" },
-            { id: 5, category: "Hüpfburgen", name: "Piratenschiff", weekdayPrice: 99, weekendPrice: 129, threeDayPrice: 245, features: "mit Rutsche & Hindernisse" },
             { id: 6, category: "Hüpfburgen", name: "Dino Doubleslide", weekdayPrice: 145, weekendPrice: 195, threeDayPrice: 320, features: "mit Doppelrutsche, als Wasserrutsche nutzbar" },
-            { id: 7, category: "Hüpfburgen", name: "Monster-Truck Doubleslide", weekdayPrice: 145, weekendPrice: 195, threeDayPrice: 320, features: "mit Doppelrutsche, als Wasserrutsche nutzbar" },
             { id: 8, category: "Hüpfburgen", name: "Wedding Bouncer", weekdayPrice: 159, weekendPrice: 189, threeDayPrice: 295, features: "mit Rutsche & Bällebad, selbst gestalten!" },
-            { id: 9, category: "Hüpfburgen", name: "PAW Bouncer", weekdayPrice: 109, weekendPrice: 139, threeDayPrice: 250, features: "mit Rutsche" },
             { id: 10, category: "Hüpfburgen", name: "PAW Kidszone", weekdayPrice: 139, weekendPrice: 179, threeDayPrice: 295, features: "perfekt für kleine Kids, Bälle Bad, Hüpfburg & Rutsche" },
+            
             // Spiel & Spaß
             { id: 201, category: "Spiel & Spaß", name: "Wasserrutsche mit Pool", weekdayPrice: 129, weekendPrice: 149, threeDayPrice: 280, features: "Großer Badespaß für den Garten" },
             { id: 202, category: "Spiel & Spaß", name: "Whack-A-Mole", weekdayPrice: 149, weekendPrice: 189, threeDayPrice: 295, features: "Aufblasbares Reaktionsspiel" },
@@ -112,34 +108,35 @@
             { id: 205, category: "Spiel & Spaß", name: "Maskottchen - Minnie", weekdayPrice: 49, weekendPrice: 59, threeDayPrice: null, features: "Professionelles Kostüm" },
             { id: 221, category: "Spiel & Spaß", name: "XXL Bausteine", weekdayPrice: 19, weekendPrice: 25, threeDayPrice: null, features: "Set mit 86 großen Bausteinen" },
             { id: 227, category: "Spiel & Spaß", name: "XXL 4-Gewinnt", weekdayPrice: 14, weekendPrice: 19, threeDayPrice: null, features: "Großes Strategiespiel" },
+            
             // Funfood
             { id: 301, category: "Funfood", name: "Slush-Ice Maschine (2-Kammer)", weekdayPrice: 55, weekendPrice: 75, threeDayPrice: null, features: "Miete für 24 Std. Sirup & Zubehör separat.", addons: [ { name: "Gewünschte Sirup-Sorten", type: "text", placeholder: "z.B. 2x Blaue Himbeere, 1x Waldmeister...", price: 0 }, { name: "Sirup 1 Liter", type: "quantity", price: 9.90 }, { name: "Sirup 5 Liter", type: "quantity", price: 45.00 }, { name: "Palmenbecher 0,4l (Stück)", type: "quantity", price: 2.50 }, { name: "Set: 30x Becher 0,2l + Trinkhalme", type: "quantity", price: 4.00 } ] },
             { id: 302, category: "Funfood", name: "Slush-Ice Maschine (3-Kammer)", weekdayPrice: 80, weekendPrice: 95, threeDayPrice: null, features: "Miete für 24 Std. Sirup & Zubehör separat.", addons: [ { name: "Gewünschte Sirup-Sorten", type: "text", placeholder: "z.B. 2x Cola, 1x Kirsche...", price: 0 }, { name: "Sirup 1 Liter", type: "quantity", price: 9.90 }, { name: "Sirup 5 Liter", type: "quantity", price: 45.00 }, { name: "Palmenbecher 0,4l (Stück)", type: "quantity", price: 2.50 }, { name: "Set: 30x Becher 0,2l + Trinkhalme", type: "quantity", price: 4.00 } ] },
             { id: 303, category: "Funfood", name: "Popcorn Maschine", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std. Inkl. 500g Mais & 50g Zucker/Salz.", addons: [ { name: "Maisart", type: "radio", options: ["Butterfly Mais", "Mushroom Mais"], price: 0}, { name: "Popcorn Spitztüten (10 Stück)", type: "quantity", price: 3.00 }, { name: "Popcorn Tüten (10 Stück)", type: "quantity", price: 2.50 }, { name: "Popcorn Becher (10 Stück)", type: "quantity", price: 3.50 } ] },
-            { id: 304, category: "Funfood", name: "XXL Popcorn Maschine", weekdayPrice: 59, weekendPrice: 79, threeDayPrice: null, features: "Miete für 24 Std. Inkl. 1kg Mais & 100g Zucker/Salz.", addons: [ { name: "Maisart", type: "radio", options: ["Butterfly Mais", "Mushroom Mais"], price: 0}, { name: "Popcorn Spitztüten (10 Stück)", type: "quantity", price: 3.00 }, { name: "Popcorn Tüten (10 Stück)", type: "quantity", price: 2.50 }, { name: "Popcorn Becher (10 Stück)", type: "quantity", price: 3.50 } ] },
             { id: 305, category: "Funfood", name: "Softeis Maschine", weekdayPrice: 89, weekendPrice: 109, threeDayPrice: null, features: "Miete für 24 Std. Pulver & Zubehör separat.", addons: [ { name: "Softeispulver Schoko (500g)", type: "quantity", price: 8.90 }, { name: "Softeispulver Vanille (500g)", type: "quantity", price: 8.90 }, { name: "Softeispulver Erdbeere (500g)", type: "quantity", price: 8.90 }, { name: "Set: 30x Eisbecher + Löffel", type: "quantity", price: 4.00 } ] },
             { id: 306, category: "Funfood", name: "Zuckerwatten Maschine", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std. Zucker & Stäbchen separat.", addons: [ { name: "Gewünschte Zucker-Sorten", type: "text", placeholder: "z.B. Orange, Blaue Himbeere...", price: 0 }, { name: "Zucker-Set (200g inkl. Stäbchen)", type: "quantity", price: 3.90 } ] },
             { id: 307, category: "Funfood", name: "Hotdog Steamer", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std. Zubehör separat.", addons: [ { name: "Hotdog Tüten (20 Stück)", type: "quantity", price: 2.00 } ] },
-            { id: 308, category: "Funfood", name: "Gastro Doppel-Fritteuse", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std. Zubehör separat.", addons: [ { name: "Bestellte TK-Produkte", type: "text", placeholder: "z.B. 2kg Pommes, 20x Frikandeln...", price: 0 } ] },
             { id: 309, category: "Funfood", name: "Schokobrunnen", weekdayPrice: 39, weekendPrice: 45, threeDayPrice: null, features: "Miete für 24 Std." },
-            { id: 310, category: "Funfood", name: "Waffel am Stiel", weekdayPrice: 25, weekendPrice: 30, threeDayPrice: null, features: "Miete für 24 Std." },
             { id: 311, category: "Funfood", name: "Waffeleisen", weekdayPrice: 15, weekendPrice: 20, threeDayPrice: null, features: "Miete für 24 Std." },
+
             // Equipment
             { id: 401, category: "Equipment", name: "Disco", weekdayPrice: 285, weekendPrice: 345, threeDayPrice: 450, features: "Komplettset für eine Party." },
             { id: 402, category: "Equipment", name: "Kinoabend", weekdayPrice: 95, weekendPrice: 145, threeDayPrice: 245, features: "Set für den perfekten Filmabend.", addons: [ { name: "Lautsprecher", type: "checkbox", price: 0 }, { name: "Sitzsäcke", type: "checkbox", price: 0 }, { name: "Beamer", type: "checkbox", price: 0 }, { name: "Popcornmaschine", type: "checkbox", price: 0 } ] },
             { id: 403, category: "Equipment", name: "Stehtische (Set)", weekdayPrice: 20, weekendPrice: 20, threeDayPrice: null, features: "Preis pro Set (1x Tisch & 1x Husse).", addons: [ { name: "Anzahl der Sets", type: "quantity", price: 0, placeholder: "Stückzahl eintragen" } ] },
-            { id: 404, category: "Equipment", name: "Kinder Sitzgruppen (Set)", weekdayPrice: 25, weekendPrice: 25, threeDayPrice: null, features: "Preis pro Set (1x Tisch & 4x Stühle).", addons: [ { name: "Anzahl der Sets", type: "quantity", price: 0, placeholder: "Stückzahl eintragen" } ] },
-            { id: 405, category: "Equipment", name: "Party Deko", weekdayPrice: 19.90, weekendPrice: 19.90, threeDayPrice: null, features: "Preis für ein Basis-Set.", addons: [ { name: "Details zum Set", type: "text", placeholder: "Motto, Farben, etc.", price: 0 } ] },
             { id: 406, category: "Equipment", name: "Partyzelt 3m x 3m", weekdayPrice: 40, weekendPrice: 50, threeDayPrice: null, features: "Stabiles Zelt für jeden Anlass." },
             { id: 407, category: "Equipment", name: "Partyzelt 3m x 6m", weekdayPrice: 80, weekendPrice: 95, threeDayPrice: null, features: "Großes Zelt für mehr Gäste." },
             { id: 408, category: "Equipment", name: "Festzeltgarnitur", weekdayPrice: 12, weekendPrice: 20, threeDayPrice: null, features: "Für Erwachsene und Kinder erhältlich.", addons: [ { name: "Anzahl der Garnituren", type: "quantity", price: 0, placeholder: "Stückzahl eintragen" } ] },
             { id: 409, category: "Equipment", name: "Festzeltgarnitur mit Hussen", weekdayPrice: 20, weekendPrice: 35, threeDayPrice: null, features: "Elegante weiße Hussen inklusive.", addons: [ { name: "Anzahl der Garnituren", type: "quantity", price: 0, placeholder: "Stückzahl eintragen" } ] },
             { id: 410, category: "Equipment", name: "JBL PartyBox 320", weekdayPrice: 35, weekendPrice: 35, threeDayPrice: null, features: "Kraftvoller Sound für deine Party.", addons: [ { name: "Inklusive Stativ", type: "checkbox", price: 0 }, { name: "Zusätzliches Mikrofon", type: "checkbox", price: 0 } ] },
             { id: 411, category: "Equipment", name: "JBL PartyBox 710", weekdayPrice: 50, weekendPrice: 50, threeDayPrice: null, features: "Massiver Sound für große Events.", addons: [ { name: "Inklusive Stativ", type: "checkbox", price: 0 }, { name: "Zusätzliches Mikrofon", type: "checkbox", price: 0 } ] },
-            { id: 412, category: "Equipment", name: "Party Set", weekdayPrice: 25, weekendPrice: 35, threeDayPrice: 95, features: "Grundausstattung für jede Feier." },
             { id: 413, category: "Equipment", name: "XXL Gasgrill", weekdayPrice: 65, weekendPrice: 85, threeDayPrice: 145, features: "Für professionelles Grillvergnügen." },
-            { id: 414, category: "Equipment", name: "Kaffeevollautomat", weekdayPrice: 45, weekendPrice: 45, threeDayPrice: null, features: "Mietpreis ab 45€, je nach Modell.", addons: [ { name: "Modell / Details", type: "text", placeholder: "Gewünschtes Modell", price: 0 } ] },
-            { id: 415, category: "Equipment", name: "Getränkekühlschrank", weekdayPrice: 45, weekendPrice: 45, threeDayPrice: null, features: "Mietpreis ab 45€, je nach Modell.", addons: [ { name: "Modell / Details", type: "text", placeholder: "Größe, etc.", price: 0 } ] }
+            { id: 415, category: "Equipment", name: "Getränkekühlschrank", weekdayPrice: 45, weekendPrice: 45, threeDayPrice: null, features: "Mietpreis ab 45€, je nach Modell.", addons: [ { name: "Modell / Details", type: "text", placeholder: "Größe, etc.", price: 0 } ] },
+
+            // Catering
+            { id: 501, category: "Catering", name: "Snack & Getränke Buffet", weekdayPrice: 0, weekendPrice: 0, threeDayPrice: null, features: "Preis nach Absprache. Details im Auftrag eintragen.", addons: [ { name: "Gebuchte Inhalte", type: "text", placeholder: "Auflistung der Speisen & Getränke...", price: 0 } ] },
+            { id: 502, category: "Catering", name: "Dessert Cups & Cupcakes", weekdayPrice: 0, weekendPrice: 0, threeDayPrice: null, features: "Preis nach Absprache. Details im Auftrag eintragen.", addons: [ { name: "Bestellte Desserts", type: "text", placeholder: "Sorten, Stückzahlen...", price: 0 } ] },
+            { id: 503, category: "Catering", name: "Donut Wall", weekdayPrice: 0, weekendPrice: 0, threeDayPrice: null, features: "Preis pro Donut, ab 1,10€.", addons: [ { name: "Donut-Sorten", type: "text", placeholder: "z.B. 50x Schoko, 25x gefüllt...", price: 0 }, { name: "Anzahl der Donuts", type: "quantity", price: 1.10 } ] },
+            { id: 504, category: "Catering", name: "Ice Cream", weekdayPrice: 0, weekendPrice: 0, threeDayPrice: null, features: "Preis nach Absprache. Details im Auftrag eintragen.", addons: [ { name: "Eis-Bestellung", type: "text", placeholder: "Sorten, Mengen, Waffeln/Becher...", price: 0 } ] }
         ];
 
         let orders = [];
@@ -258,9 +255,9 @@
                 cont.innerHTML += `
                     <div class="grid grid-cols-3 items-center gap-2 bg-gray-50 p-3 rounded-lg">
                         <span class="font-medium text-gray-800 col-span-3 sm:col-span-1">${p.name}</span>
-                        <div class="col-span-2 sm:col-span-1">${priceSelectorHTML}</div>
+                        <div class="col-span-2 sm:col-span-1">${p.weekdayPrice > 0 || p.weekendPrice > 0 ? priceSelectorHTML : ''}</div>
                         <div class="flex items-center gap-1 col-span-1 justify-self-end">
-                            <input type="number" value="${finalPrice.toFixed(2)}" oninput="updateCartItemOverridePrice(${p.id}, this.value)" placeholder="Preis" class="w-20 text-right px-2 py-1 border border-gray-300 rounded-md text-sm">
+                            <input type="number" step="0.01" value="${finalPrice.toFixed(2)}" oninput="updateCartItemOverridePrice(${p.id}, this.value)" placeholder="Preis" class="w-20 text-right px-2 py-1 border border-gray-300 rounded-md text-sm">
                             <button type="button" onclick="removeFromCartAndRerenderModal(${p.id})" class="text-red-500 hover:text-red-700 text-2xl font-bold">×</button>
                         </div>
                         ${addonsHTML}
@@ -295,7 +292,7 @@
                     let singleItemPrice = 0;
                     if (p.threeDayPrice && item.priceModel === 'threeDay') {
                         singleItemPrice = p.threeDayPrice;
-                    } else if (hasDateRange) {
+                    } else if (hasDateRange && (p.weekdayPrice > 0 || p.weekendPrice > 0)) {
                         const days = Math.ceil((new Date(end) - new Date(start)) / (1000 * 60 * 60 * 24)) + 1;
                         for (let i = 0; i < days; i++) {
                             const d = new Date(start);
@@ -346,7 +343,7 @@
             let total = subTotalWithTravel - totalDisc;
 
             const breakdown = [];
-            breakdown.push(`Produktmiete: ${pCost.toFixed(2)} €`);
+            breakdown.push(`Produkte & Catering: ${pCost.toFixed(2)} €`);
             if (addonCost > 0) breakdown.push(`Zubehör & Extras: ${addonCost.toFixed(2)} €`);
             if (document.getElementById('asphaltPauschale').value === 'true' || document.getElementById('kabeltrommel').value === 'true' || document.getElementById('aufbauService').value === 'true') {
                  breakdown.push(`Services: ${(sub - pCost - addonCost).toFixed(2)} €`);
@@ -404,7 +401,7 @@
                             productsHTML += ` <strong>(${quantityAddon.value}x)</strong>`;
                         }
                     }
-                     productsHTML += ` (${p.finalPrice.toFixed(2)} €)`;
+                     productsHTML += p.finalPrice > 0 ? ` (${p.finalPrice.toFixed(2)} €)`: '';
                     
                     const addonsToShow = p.addons.filter(a => a.value && !a.name.startsWith("Anzahl der"));
                     if (addonsToShow.length > 0) {
